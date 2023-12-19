@@ -17,7 +17,7 @@ class UserController extends Controller
         if (Auth::check()) {
             $name = $user->name;
         }
-        return view('user', compact('name'));
+        return view('dashboard', compact('name'));
     }
 
     /**

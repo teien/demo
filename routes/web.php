@@ -30,8 +30,7 @@ Route::middleware([
 });
 Route::get('/auth/google/redirect', [GgController::class, 'index'])->name('login.google');
 Route::get('/auth/google/callback', [GgController::class, 'create'])->name('login_create.google');
-Route::get('/user',[UserController::class,'index']);
 
-
+Route::get('/dashboard',[UserController::class,'index']);
 
 
