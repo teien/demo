@@ -7,6 +7,8 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GgController;
 use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +20,7 @@ use App\Http\Controllers\FacebookController;
 |
 */
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -33,4 +35,10 @@ Route::get('/auth/google/callback', [GgController::class, 'create'])->name('logi
 
 Route::get('/dashboard',[UserController::class,'index']);
 
+Route::get('/product', [ProductController::class, 'productList'])->name('products.list');
+Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
+Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.store');
+Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
+Route::post('/remove', [CartController::class, 'removeCart'])->name('cart.remove');
+Route::post('/clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 

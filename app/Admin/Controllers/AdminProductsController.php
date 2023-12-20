@@ -25,18 +25,26 @@ class AdminProductsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Products());
-
-        $grid->column('id', __('Id'));
-        $grid->column('CATALOG_ID', __('CATALOG ID'));
-        $grid->column('name', __('Name'));
-        $grid->column('price', __('Price'));
-        $grid->column('amount', __('Amount'));
+        $grid->column('id', __('ID'));
+        $grid->column('CATALOG_ID', __('CATALOG ID'))->editable();
+        $grid->column('name', __('Name'))->editable();
+        $grid->column('price', __('Price'))->editable();
+        $grid->column('amount', __('Amount'))->editable();
         $grid->column('img_link')->display(function ($img_link) {
             $fullUrl = asset("assets/{$img_link}");
             return "<img src='{$fullUrl}' style='width: 80px;' />";
         });
         //$grid->column('img_link', __('Image link'));
-        $grid->column('content', __('Content'));
+        $grid->column('content', __('Content'))->editable();
+        $grid->filter(function ($filter) {
+            // Xóa ID filter mặc định
+           // $filter->disableIdFilter();
+
+            // Thêm 1 filter theo cột dữ liệu
+            $filter->like('name', 'Name');
+            $filter->like('CATALOG_ID', 'Catalog ID');
+        });
+
         return $grid;
     }
 
@@ -50,7 +58,7 @@ class AdminProductsController extends AdminController
     {
         $show = new Show(Products::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('ID'));
         $show->field('CATALOG_ID', __('CATALOG ID'));
         $show->field('name', __('Name'));
         $show->field('price', __('Price'));
@@ -70,14 +78,12 @@ class AdminProductsController extends AdminController
     protected function form()
     {
         $form = new Form(new Products());
-
         $form->number('CATALOG_ID', __('CATALOG ID'));
         $form->text('name', __('Name'));
         $form->decimal('price', __('Price'));
         $form->number('amount', __('Amount'));
         $form->text('img_link', __('Img link'));
         $form->textarea('content', __('Content'));
-
         return $form;
     }
 }

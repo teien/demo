@@ -16,5 +16,7 @@ class Products extends Model
         'amout',
         'img_link',
         'CATALOG_ID',
+        'created_at',
+        'updated_at'
     ];
 }

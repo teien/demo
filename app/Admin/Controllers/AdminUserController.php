@@ -25,7 +25,11 @@ class AdminUserController extends AdminController
         //$grid->column('password', __('Password'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-
+        $grid->filter(function ($filter) {
+            $filter->like('name', 'Name');
+            $filter->like('Email', 'Email');
+           // $filter->like('Phone', 'Phone');
+        });
         return $grid;
     }
 

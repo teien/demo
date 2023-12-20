@@ -189,5 +189,50 @@
         });
     }
 </script>
+//add card
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    var buttons = document.querySelectorAll('.formclick');
+    console.log(buttons);
+    buttons.forEach(function(button) {
+        button.addEventListener('submit', function(event) {
+
+            var productId = button.querySelector('[name="id"]').value;
+            var productName = button.querySelector('[name="name"]').value;
+            var productPrice = button.querySelector('[name="price"]').value;
+            var productQuantity = button.querySelector('[name="quantity"]').value;
+            var productImgLink = button.querySelector('[name="img_link"]').value;
+
+            console.log(productId);
+            // Gửi yêu cầu Ajax đến server
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('cart.store') }}",
+                data: {
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    quantity: productQuantity,
+                    attributes: {
+                        img_link: productImgLink,
+                    },
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Xử lý phản hồi từ server (nếu cần)
+                },
+                error: function(error) {
+                    console.error(error);
+                    // Xử lý lỗi (nếu cần)
+                }
+            });
+
+        });
+    });
+ } );
+</script>
+
+
 
 </html>

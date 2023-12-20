@@ -13,8 +13,8 @@ class HomeController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->title('Dashboard')
-            ->description('Description...')
+            ->title('Welcome');
+            /* ->description('Description...')
             ->row(Dashboard::title())
             ->row(function (Row $row) {
 
@@ -29,6 +29,6 @@ class HomeController extends Controller
                 $row->column(4, function (Column $column) {
                     $column->append(Dashboard::dependencies());
                 });
-            });
+            }); */
     }
 }

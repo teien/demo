@@ -1,6 +1,7 @@
 <?php
 
 use App\Admin\Controllers\AdminProductsController;
+use App\Admin\Controllers\AdminUserController;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
