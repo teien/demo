@@ -1,92 +1,118 @@
 @extends('layouts.frontend')
-
-
 @section('content')
-          <main class="my-8">
-            <div class="container px-6 mx-auto">
-                <div class="flex justify-center my-6">
-                    <div class="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
-                      @if ($message = Session::get('success'))
-                          <div class="p-4 mb-3 bg-green-400 rounded">
-                              <p class="text-green-800">{{ $message }}</p>
-                          </div>
-                      @endif
-                        <h3 class="text-3xl text-bold">Cart List</h3>
-                      <div class="flex-1">
-                        <table class="w-full text-sm lg:text-base" cellspacing="0">
-                          <thead>
-                            <tr class="h-12 uppercase">
-                              <th class="hidden md:table-cell"></th>
-                              <th class="text-left">Name</th>
-                              <th class="pl-5 text-left lg:text-right lg:pl-0">
-                                <span class="lg:hidden" title="Quantity">Qtd</span>
-                                <span class="hidden lg:inline">Quantity</span>
-                              </th>
-                              <th class="hidden text-right md:table-cell"> price</th>
-                              <th class="hidden text-right md:table-cell"> Remove </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                              @foreach ($cartItems as $item)
-                            <tr>
-                              <td class="hidden pb-4 md:table-cell">
-                                <a href="#">
-                                  <img src="{{ asset($item->attributes->img_link) }}" class="w-20 rounded" alt="Thumbnail">
-                                </a>
-                              </td>
-                              <td>
-                                <a href="#">
-                                  <p class="mb-2 md:ml-4">{{ $item->name }}</p>
-
-                                </a>
-                              </td>
-                              <td class="justify-center mt-6 md:justify-end md:flex">
-                                <div class="h-10 w-28">
-                                  <div class="relative flex flex-row w-full h-8">
-
-                                    <form action="{{ route('cart.update') }}" method="POST">
-                                      @csrf
-                                      <button>
-                                      <input type="hidden" name="id" value="{{ $item->id}}" >
-                                    <input type="number" name="quantity" value="{{ $item->quantity }}"
-                                    class="w-12 text-center bg-gray-300" />
-
-                                    </form>
-                                  </div>
+<section class="bg-light my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card border shadow-0" style="min-height: 530px;">
+                    <div class="m-4">
+                        <h4 class="card-title mb-5 text-center">Your shopping cart</h4>
+                        @foreach ($cartItems as $item)
+                        <div class="row mb-5 align-items-center text-center border-bottom">
+                            <div class="col-lg-5">
+                                <div class="me-lg-5">
+                                    <div class="d-flex align-items-center text-center">
+                                        <img src="{{ asset($item->attributes->first()) }}" width="100" alt="Thumbnail" loading="lazy" />
+                                        <div class="">
+                                            <a href="#" class="nav-link font-mono text-success"> {{ $item->name }} </a>
+                                        </div>
+                                    </div>
                                 </div>
-                              </td>
-                              <td class="hidden text-right md:table-cell">
-                                <span class="text-sm font-medium lg:text-base">
-                                    ${{ $item->price }}
-                                </span>
-                              </td>
-                              <td class="hidden text-right md:table-cell">
-                                <form action="{{ route('cart.remove') }}" method="POST">
-                                  @csrf
-                                  <input type="hidden" value="{{ $item->id }}" name="id">
-                                  <button class="px-4 py-2 text-white bg-red-600">x</button>
-                              </form>
+                            </div>
+                            <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap ">
+                                <div class="">
+                                    <div class="relative flex flex-row mr-5 border">
+                                        <form class="update-form" action="{{ route('cart.update') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $item->id }}">
+                                            <input type="number" name="quantity" style="width: 50px;" data-price="{{ $item->price }}" value="{{ $item->quantity }}" class="text-center border quantityInput update-input" />
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="float-md-end">
+                                    <text class="h6"> {{ ($item->price)*($item->quantity) }} đ </text> <br />
+                                    <small class="text-muted text-nowrap">{{($item->price)}} đ / per item </small>
+                                </div>
+                            </div>
+                            <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                                <div class="float-md-end">
+                                    <form action="{{ route('cart.remove') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" value="{{ $item->id }}" name="id">
+                                        <button class="btn btn-light border text-danger icon-hover-danger">Remove</button>
+                                    </form>
 
-                              </td>
-                            </tr>
-                            @endforeach
+                                </div>
+                            </div>
 
-                          </tbody>
-                        </table>
-                        <div>
-                         Total: ${{ Cart::getTotal() }}
                         </div>
-                        <div>
-                          <form action="{{ route('cart.clear') }}" method="POST">
-                            @csrf
-                            <button class="px-6 py-2 text-red-800 bg-red-300">Remove All Cart</button>
-                          </form>
+                        @endforeach
+                        <div class="border-top pt-4 mx-4 mb-4">
+                            <p><i class="fas fa-truck text-muted fa-lg">
+                                </i> Free Delivery within 1-2 weeks</p>
+                            <p class="text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                aliquip
+                            </p>
                         </div>
-
-
-                      </div>
                     </div>
-                  </div>
+                </div>
             </div>
-        </main>
-    @endsection
+            <div class="col-lg-3">
+                <div class="card mb-3 border shadow-0">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label class="form-label">Have coupon?</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control border" name="" placeholder="Coupon code" />
+                                    <button class="btn btn-light border">Apply</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card shadow-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="mb-2">Total price:</p>
+                            <p class="mb-2">${{ Cart::getTotal() }}</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p class="mb-2">Discount:</p>
+                            <p class="mb-2 text-success">-$60.00</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p class="mb-2">TAX:</p>
+                            <p class="mb-2">$14.00</p>
+                        </div>
+                        <hr />
+                        <div class="d-flex justify-content-between">
+                            <p class="mb-2">Total price:</p>
+                            <p class="mb-2 fw-bold">${{ Cart::getTotal() }}</p>
+                        </div>
+
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </a>
+                            <a href="#" class="btn btn-light w-100 border mt-2"> Back to shop </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var updateInputs = document.querySelectorAll('.update-input');
+    updateInputs.forEach(function (updateInput) {
+        updateInput.addEventListener('change', function () {
+            var form = this.closest('.update-form');
+            form.submit();
+        });
+    });
+});
+</script>
+
+@endsection

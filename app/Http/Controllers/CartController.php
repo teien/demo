@@ -13,7 +13,6 @@ class CartController extends Controller
     public function cartList()
     {
         $cartItems = Cart::getContent();
-        //dd($cartItems);
         return view('product.cart', compact('cartItems'));
     }
     public function addToCart(Request $request)
@@ -23,15 +22,12 @@ class CartController extends Controller
         $name = $request->name;
         $price = $request->price;
         $quantity = $request->quantity;
-        $attributes = [
-            'img_link' => $request->img_link,
-        ];
-
-        Cart::add($id, $name, $price, $quantity, $attributes);
-
+        $img_link = $request->img_link;
+        Cart::add($id, $name, $price, $quantity, $img_link);
         // Trả về phản hồi JSON thay vì chuyển hướng
         return response()->json(['message' => 'Item added to cart successfully']);
     }
+
 
 
     /*  public function addToCart(Request $request)

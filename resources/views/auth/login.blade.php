@@ -33,11 +33,11 @@
                 </label>
             </div>
             <div class="flex-column items-center justify-center mt-4">
-                <x-button class="btn" style="font-size: 20px; border-radius: 8px; ">
+                <x-button class="btngg" style="font-size: 20px; border-radius: 8px; ">
                     {{ __('Log in') }}
                 </x-button>
                 @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                <a class="underline text-sm" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
                 @endif
@@ -45,15 +45,15 @@
 
             </div>
             <div>
-                <p class="P">
+                <p class="text_p">
                     Bạn không có tài khoản?
                     <a href=" {{url('/register')}}" class="span">Đăng kí</a>
                 </p>
-                <p class="p line">Hoặc với</p>
+                <p class="text_p line">Hoặc với</p>
 
                 <div class="flex-row ">
                     <a href="{{ url('auth/google/redirect') }}" style="width: 100%;">
-                        <button type="button" class="btn">
+                        <button type="button" class="btngg">
                             <svg xml:space="preserve" style="enable-background: new 0 0 512 512" viewBox="0 0 512 512" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Layer_1" width="20" version="1.1">
                                 <path d="M113.47,309.408L95.648,375.94l-65.139,1.378C11.042,341.211,0,299.9,0,256  c0-42.451,10.324-82.483,28.624-117.732h0.014l57.992,10.632l25.404,57.644c-5.317,15.501-8.215,32.141-8.215,49.456
             C103.821,274.792,107.225,292.797,113.47,309.408z" style="fill: #fbbb00"></path>

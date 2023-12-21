@@ -156,6 +156,7 @@
         </div>
     </div>
 
+    @include('alert.addToCardSucess')
     </div>
 
     @include('includes.footer')
@@ -175,11 +176,12 @@
                         dots: false
                     },
                     600: {
-                        items: 3,
+                        items: 2,
                         nav: false,
                         dots: false
                     },
-                    1000: {
+
+                    1300: {
                         items: 5,
                         nav: true,
                         loop: false
@@ -191,46 +193,60 @@
 </script>
 //add card
 <script>
-    document.addEventListener("DOMContentLoaded", function(){
-    var buttons = document.querySelectorAll('.formclick');
-    console.log(buttons);
-    buttons.forEach(function(button) {
-        button.addEventListener('submit', function(event) {
-
-            var productId = button.querySelector('[name="id"]').value;
-            var productName = button.querySelector('[name="name"]').value;
-            var productPrice = button.querySelector('[name="price"]').value;
-            var productQuantity = button.querySelector('[name="quantity"]').value;
-            var productImgLink = button.querySelector('[name="img_link"]').value;
-
-            console.log(productId);
-            // Gửi yêu cầu Ajax đến server
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('cart.store') }}",
-                data: {
-                    id: productId,
-                    name: productName,
-                    price: productPrice,
-                    quantity: productQuantity,
-                    attributes: {
+    document.addEventListener("DOMContentLoaded", function() {
+        var buttons = document.querySelectorAll('.formclick');
+        buttons.forEach(function(button) {
+            button.addEventListener('submit', function(event) {
+                event.preventDefault();
+                var productId = button.querySelector('[name="id"]').value;
+                var productName = button.querySelector('[name="name"]').value;
+                var productPrice = button.querySelector('[name="price"]').value;
+                var productQuantity = button.querySelector('[name="quantity"]').value;
+                var productImgLink = button.querySelector('[name="img_link"]').value;
+                // Gửi yêu cầu Ajax đến server
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('cart.store') }}",
+                    data: {
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        quantity: productQuantity,
                         img_link: productImgLink,
+                        _token: '{{ csrf_token() }}',
                     },
-                    _token: '{{ csrf_token() }}',
-                },
-                success: function(response) {
-                    console.log(response);
-                    // Xử lý phản hồi từ server (nếu cần)
-                },
-                error: function(error) {
-                    console.error(error);
-                    // Xử lý lỗi (nếu cần)
-                }
-            });
+                    success: function showNotification() {
+                        var notification = $('#notification');
+                        notification.addClass('show');
 
+                        // Hide the notification after 3 seconds (adjust as needed)
+                        setTimeout(function() {
+                            notification.removeClass('show');
+                        }, 5000);
+                        updateCartInHeader();
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+
+            });
         });
     });
- } );
+
+    function updateCartInHeader() {
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('cart.total-quantity') }}",
+            success: function(response) {
+                $('#cartContainer').text(response.total_quantity);
+
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    }
 </script>
 
 
