@@ -17,7 +17,6 @@ class CartController extends Controller
     }
     public function addToCart(Request $request)
     {
-        // Xử lý dữ liệu và thêm vào giỏ hàng ở đây
         $id = $request->id;
         $name = $request->name;
         $price = $request->price;

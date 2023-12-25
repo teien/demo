@@ -9,6 +9,8 @@ use App\Http\Controllers\GgController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CheckoutController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +44,7 @@ Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.u
 Route::post('/remove', [CartController::class, 'removeCart'])->name('cart.remove');
 Route::post('/clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 Route::get('/cart/total-quantity', [CartController::class, 'getTotalQuantity'])->name('cart.total-quantity');
-// Route trong Laravel để xử lý yêu cầu Ajax
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.infor');
+
 
 
