@@ -1,11 +1,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-
-    <title>
-        Checkout
-    </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
@@ -255,48 +253,51 @@
             font-weight: 500;
         }
     </style>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-<body>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand ms-5" href="#">
-            <img width="100px" src="https://xxivstore.com/wp-content/uploads/2023/10/XXIV-Logo-2.svg" alt="" />
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item ">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('home') ? 'active' : '' }}" href="/home">Trang chủ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('about') ? 'active' : '' }}" href="/about">Giới thiệu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/cart">Sản phẩm</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="#">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}"  href="#">Liên hệ</a>
-                </li>
-            </ul>
 
-            <div class="icon-header d-flex align-items-center ms-auto gap-5 me-5">
-                <a href="login" class="text-decoration-none">
-                    <i class="far fa-user ms-2"></i>
-                </a>
-                <a href="{{ route('cart.list') }}" class="flex items-center position-relative text-decoration-none">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cartContainer" class="badge rounded-circle bg-danger position-absolute top-0 start-100 translate-middle ">{{ Cart::getTotalQuantity()}}</span>
-                </a>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand ms-5" href="#">
+                <img width="100px" src="https://xxivstore.com/wp-content/uploads/2023/10/XXIV-Logo-2.svg" alt="" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item ">
+                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('home') ? 'active' : '' }}" href="/home">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('about') ? 'active' : '' }}" href="/about">Giới thiệu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/products">Sản phẩm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/contact">Liên hệ</a>
+                    </li>
+                </ul>
+
+                <div class="icon-header d-flex align-items-center ms-auto gap-5 me-5">
+                    <i class="fa-solid fa-truck-fast fa-bounce fa-lg" style="color: #000;"></i>
+                    <a href="login" class="text-decoration-none">
+                        <i class="far fa-user ms-2"></i>
+                    </a>
+
+                    <a href="{{ route('cart.list') }}" class="flex items-center position-relative text-decoration-none">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartContainer" class="badge rounded-circle bg-danger position-absolute top-0 start-100 translate-middle ">{{ Cart::getTotalQuantity()}}</span>
+                    </a>
+                </div>
             </div>
-        </div>
-    </nav>
-</header >
+        </nav>
+    </header>
 
     <div class="container mt-5 mb-5">
         <div class="row">
@@ -487,5 +488,6 @@
     @include('includes.footer')
 </body>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </html>

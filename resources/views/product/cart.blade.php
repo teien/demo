@@ -94,7 +94,7 @@
                             <p class="mb-2 fw-bold" id="finalPrice"> đ</p>
                         </div>
                         <div class="mt-3">
-                            <a href="#" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </a>
+                            <a href="checkout" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </a>
                             <a href="#" class="btn btn-light w-100 border mt-2"> Back to shop </a>
                         </div>
                     </div>
@@ -105,70 +105,65 @@
 </section>
 
 <script>
- document.addEventListener('DOMContentLoaded', function() {
-    var updateInputs = document.querySelectorAll('.update-input');
-
-    updateInputs.forEach(function(updateInput) {
-        updateInput.addEventListener('change', function() {
-            var checkboxChecked = updateInput.querySelector('[name="checkbox-product"]').checked;
-
-            var productId = updateInput.querySelector('[name="id"]').value;
-            var productQuantity = updateInput.querySelector('[name="quantity"]').value;
-            var quantityInput = updateInput.querySelector('.quantityInput');
-
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('cart.update') }}",
-                data: {
-                    id: productId,
-                    quantity: productQuantity,
-                    _token: '{{ csrf_token() }}',
-                },
-                success: function(response) {
-                    var priceElement = updateInput.closest('.row').querySelector('.h6');
-                    var price = quantityInput.dataset.price;
-                    priceElement.textContent = price * productQuantity + ' đ';
-                    updateTotalProduct();
-                    updateCartInHeader();
-                },
-                error: function(error) {
-                    console.log(error);
-                }
+    document.addEventListener('DOMContentLoaded', function() {
+        var updateInputs = document.querySelectorAll('.update-input');
+        updateInputs.forEach(function(updateInput) {
+            updateInput.addEventListener('change', function() {
+                var checkboxChecked = updateInput.querySelector('[name="checkbox-product"]').checked;
+                var productId = updateInput.querySelector('[name="id"]').value;
+                var productQuantity = updateInput.querySelector('[name="quantity"]').value;
+                var quantityInput = updateInput.querySelector('.quantityInput');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('cart.update') }}",
+                    data: {
+                        id: productId,
+                        quantity: productQuantity,
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(response) {
+                        var priceElement = updateInput.closest('.row').querySelector('.h6');
+                        var price = quantityInput.dataset.price;
+                        priceElement.textContent = price * productQuantity + ' đ';
+                        updateTotalProduct();
+                        updateCartInHeader();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
             });
         });
+
+        function updateTotalProduct() {
+            var totalPriceElement = document.getElementById('totalPrice');
+            var finalPriceElement = document.getElementById('finalPrice');
+            var selectedProducts = document.querySelectorAll('.update-input [name="checkbox-product"]:checked');
+            var totalProductPrice = 0;
+            selectedProducts.forEach(function(selectedProduct) {
+                var updateInput = selectedProduct.closest('.update-input');
+                var productQuantity = updateInput.querySelector('[name="quantity"]').value;
+                var quantityInput = updateInput.querySelector('.quantityInput');
+                var price = quantityInput.dataset.price;
+                totalProductPrice += price * productQuantity;
+            });
+            totalPriceElement.textContent = totalProductPrice + ' đ';
+            finalPriceElement.textContent = totalProductPrice + ' đ';
+        }
+
+        function updateCartInHeader() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('cart.total-quantity') }}",
+                success: function(response) {
+                    $('#cartContainer').text(response.total_quantity);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }
     });
-
-    function updateTotalProduct() {
-        var totalPriceElement = document.getElementById('totalPrice');
-        var finalPriceElement = document.getElementById('finalPrice');
-        var selectedProducts = document.querySelectorAll('.update-input [name="checkbox-product"]:checked');
-        var totalProductPrice = 0;
-        selectedProducts.forEach(function(selectedProduct) {
-            var updateInput = selectedProduct.closest('.update-input');
-            var productQuantity = updateInput.querySelector('[name="quantity"]').value;
-            var quantityInput = updateInput.querySelector('.quantityInput');
-            var price = quantityInput.dataset.price;
-            totalProductPrice += price * productQuantity;
-        });
-
-        totalPriceElement.textContent = totalProductPrice + ' đ';
-        finalPriceElement.textContent = totalProductPrice + ' đ';
-    }
-
-    function updateCartInHeader() {
-        $.ajax({
-            type: 'GET',
-            url: "{{ route('cart.total-quantity') }}",
-            success: function(response) {
-                $('#cartContainer').text(response.total_quantity);
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
-    }
-});
-
 </script>
 
 @endsection

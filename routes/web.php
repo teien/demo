@@ -35,7 +35,7 @@ Route::middleware([
 Route::get('/auth/google/redirect', [GgController::class, 'index'])->name('login.google');
 Route::get('/auth/google/callback', [GgController::class, 'create'])->name('login_create.google');
 
-Route::get('/dashboard',[UserController::class,'index']);
+Route::get('/profile',[UserController::class,'index']);
 
 Route::get('/product', [ProductController::class, 'productList'])->name('products.list');
 Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
@@ -44,7 +44,9 @@ Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.u
 Route::post('/remove', [CartController::class, 'removeCart'])->name('cart.remove');
 Route::post('/clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 Route::get('/cart/total-quantity', [CartController::class, 'getTotalQuantity'])->name('cart.total-quantity');
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.infor');
 
 
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.infor');
+});
 
