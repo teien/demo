@@ -15,21 +15,11 @@ class CartController extends Controller
         $cartItems = Cart::getContent();
         return view('product.cart', compact('cartItems'));
     }
-  /*   public function addToCart(Request $request)
-    {
-        $id = $request->id;
-        $name = $request->name;
-        $price = $request->price;
-        $quantity = $request->quantity;
-        $img_link = $request->img_link;
-        Cart::add($id, $name, $price, $quantity, $img_link);
-        // Trả về phản hồi JSON thay vì chuyển hướng
-        return response()->json(['message' => 'Item added to cart successfully']);
-    } */
 
 
 
-     public function addToCart(Request $request)
+
+    public function addToCart(Request $request)
     {
         Cart::add([
             'id' => $request->id,
@@ -37,7 +27,7 @@ class CartController extends Controller
             'price' => $request->price,
             'quantity' => $request->quantity,
             'attributes' => array(
-            'img_link' => $request->img_link,
+                'img_link' => $request->img_link,
             )
         ]);
         session()->flash('success', 'Product is Added to Cart Successfully !');

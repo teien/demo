@@ -10,7 +10,8 @@ use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
-
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProductDetailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,7 @@ use App\Http\Controllers\CheckoutController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware([
@@ -35,7 +37,7 @@ Route::middleware([
 Route::get('/auth/google/redirect', [GgController::class, 'index'])->name('login.google');
 Route::get('/auth/google/callback', [GgController::class, 'create'])->name('login_create.google');
 
-Route::get('/profile',[UserController::class,'index']);
+Route::get('/profile', [UserController::class, 'index']);
 
 Route::get('/product', [ProductController::class, 'productList'])->name('products.list');
 Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
@@ -47,6 +49,22 @@ Route::get('/cart/total-quantity', [CartController::class, 'getTotalQuantity'])-
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.infor');
+    Route::get('/checkout', [CheckoutController::class, 'checkoutList'])->name('checkout.list');
+    Route::post('/checkout-add', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'storeCheckout'])->name('checkout.store');
 });
 
+
+Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index']);
+
+Route::get('/product/{id}', [ProductDetailController::class, 'show']);
+
+Route::get('/product', [ProductDetailController::class, 'index']);
+
+Route::post('/contact', [ContactController::class, 'store']);
+
+Route::post('/comment/{id}', [ProductDetailController::class, 'post_comment'])->name('product.comment');
+
+Route::get('/product/{id}', [ProductDetailController::class, 'comment']);
+
+Route::get('/comment/delete/{id}', [ProductDetailController::class, 'destroy']);

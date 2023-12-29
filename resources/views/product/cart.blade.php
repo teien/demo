@@ -15,10 +15,10 @@
 
                                 <div class="me-lg-5">
                                     <div class="d-flex align-items-center text-center">
-                                        <input type="checkbox" name="checkbox-product" style="">
-                                        <img src="{{ asset($item->attributes->first()) }}" width="100" alt="Thumbnail" loading="lazy" />
+                                        <input type="checkbox" name="checkbox-product">
+                                        <img src="{{ asset($item->attributes->first()) }}" name="imgProduct" data-img="{{$item->attributes->first()}}" width="100" alt="Thumbnail" loading="lazy" />
                                         <div class="">
-                                            <a href="#" class="nav-link font-mono text-success">{{ $item->name }}</a>
+                                            <a href="#" class="nav-link font-mono text-success" name="name" data-name="{{ $item->name }}">{{ $item->name }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -28,15 +28,14 @@
                                     <div class="relative flex flex-row me-5 border">
                                         <form class="update-form " action="{{ route('cart.update') }}" method="POST">
                                             @csrf
-
                                             <input type="hidden" name="id" value="{{ $item->id }}">
                                             <input type="number" name="quantity" style="width: 50px;" data-price="{{ $item->price }}" value="{{ $item->quantity }}" class="text-center border quantityInput " />
                                         </form>
                                     </div>
                                 </div>
                                 <div class="float-md-end">
-                                    <text class="h6"> {{ ($item->price) * ($item->quantity) }} đ </text> <br />
-                                    <small class="text-muted text-nowrap item-price">{{ ($item->price) }} đ / per item </small>
+                                    <text class="h6"> {{ number_format(($item->price) * ($item->quantity), 0, ',', '.') }} đ </text> <br />
+                                    <small class="text-muted text-nowrap item-price" name="price" data-price=" {{ $item->price }}">{{ number_format($item->price,0, ',', '.') }} đ / per item </small>
                                 </div>
                             </div>
                             <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
@@ -78,7 +77,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <p class="mb-2">Total price:</p>
-                            <p class="mb-2" id="totalPrice"> đ</p>
+                            <p class="mb-2" id="totalPrice"> </p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <p class="mb-2">Discount:</p>
@@ -91,10 +90,10 @@
                         <hr />
                         <div class="d-flex justify-content-between">
                             <p class="mb-2">Total price:</p>
-                            <p class="mb-2 fw-bold" id="finalPrice"> đ</p>
+                            <p class="mb-2 fw-bold" id="finalPrice"> </p>
                         </div>
                         <div class="mt-3">
-                            <a href="checkout" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </a>
+                            <a href="#" class="btn btn-success w-100 shadow-0 mb-2" id="makePurchaseButton"> Make Purchase </a>
                             <a href="#" class="btn btn-light w-100 border mt-2"> Back to shop </a>
                         </div>
                     </div>
@@ -107,6 +106,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var updateInputs = document.querySelectorAll('.update-input');
+        var makePurchaseButton = document.getElementById('makePurchaseButton');
+        console.log(makePurchaseButton)
         updateInputs.forEach(function(updateInput) {
             updateInput.addEventListener('change', function() {
                 var checkboxChecked = updateInput.querySelector('[name="checkbox-product"]').checked;
@@ -124,15 +125,49 @@
                     success: function(response) {
                         var priceElement = updateInput.closest('.row').querySelector('.h6');
                         var price = quantityInput.dataset.price;
-                        priceElement.textContent = price * productQuantity + ' đ';
+                        priceElement.textContent = Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(price * productQuantity);
                         updateTotalProduct();
                         updateCartInHeader();
+
                     },
                     error: function(error) {
                         console.log(error);
                     }
                 });
             });
+        });
+        makePurchaseButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var selectedProducts = getSelectedProducts();
+            console.log(selectedProducts)
+            if (selectedProducts.length === 0) {
+                alert('Please check at least one checkbox before making a purchase.');
+            } else {
+                // Gửi dữ liệu đến route '/checkout' bằng Ajax
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('checkout') }}",
+                    data: {
+                        selectedProducts: selectedProducts, // Không cần chuyển đổi sang JSON string
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+
+                        window.location.href = "{{ url('checkout') }}";
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+
+
+            }
+
         });
 
         function updateTotalProduct() {
@@ -147,8 +182,16 @@
                 var price = quantityInput.dataset.price;
                 totalProductPrice += price * productQuantity;
             });
-            totalPriceElement.textContent = totalProductPrice + ' đ';
-            finalPriceElement.textContent = totalProductPrice + ' đ';
+
+            totalPriceElement.textContent = Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(totalProductPrice);
+            finalPriceElement.textContent = Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(totalProductPrice);
+            return totalProductPrice;
         }
 
         function updateCartInHeader() {
@@ -162,6 +205,34 @@
                     console.error(error);
                 }
             });
+        }
+
+
+        function getSelectedProducts() {
+            var updateInputs = document.querySelectorAll('.update-input');
+            var selectedProducts = [];
+            var productId = [];
+            updateInputs.forEach(function(updateInput) {
+                var checkboxChecked = updateInput.querySelector('[name="checkbox-product"]').checked;
+
+                if (checkboxChecked) {
+                    var productId = updateInput.querySelector('[name="id"]').value;
+                    var productQuantity = updateInput.querySelector('[name="quantity"]').value;
+                    var productPrice = updateInput.querySelector('[name="price"]').dataset.price;
+                    var productName = updateInput.querySelector('[name="name"]').dataset.name;
+                    var productImg = updateInput.querySelector('[name="imgProduct"]').dataset.img;
+                    var totalProductPrice = updateTotalProduct();
+                    selectedProducts.push({
+                        id: productId,
+                        quantity: productQuantity,
+                        price: productPrice,
+                        name: productName,
+                        img_link: productImg,
+                        totalPrice: totalProductPrice
+                    });
+                }
+            });
+            return selectedProducts;
         }
     });
 </script>

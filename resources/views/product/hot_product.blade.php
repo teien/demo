@@ -29,7 +29,7 @@
                         </svg>
                     </span>
                     <input type="hidden" value="{{ $index->id }}"  name="id">
-                    <input type="hidden" value="{{ $index->name }}" name="name">
+                    <input type="hidden" value="{{ $index->name }}" name="name" ">
                     <input type="hidden" value="{{ $index->price }}" name="price">
                     <input type="hidden" value="{{ $index->img_link }}" name="img_link">
                     <input type="hidden" value="1" name="quantity">
@@ -40,3 +40,7 @@
         @endforeach
     </div>
 </div>
+
+
+
+

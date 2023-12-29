@@ -12,7 +12,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $product =Db::table('product')->select('*');
+        $product =Db::table('products')->select('*');
         $product = $product->get();
         return view('home',compact('product'));
     }
