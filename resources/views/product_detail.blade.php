@@ -210,20 +210,22 @@
 
                             <div>
                                 <label class="capacity " for="">Dung tích</label>
-                                <select class="option-capacity col-10" name="" id="">
+                                <select class="option-capacity">
                                     <option value="">Chọn một tùy chọn</option>
                                     <option value="100ml">100ml</option>
                                 </select>
                             </div>
                             <div>
                                 <form class="formClick">
-                                    <button type="submit" class="btn btn-success">
+                                    <button type="submit" style="display: none;">
                                         <input type="hidden" value="{{ $product->id }}" name="id">
                                         <input type="hidden" value="{{ $product->name }}" name="name">
                                         <input type="hidden" value="{{ $product->price }}" name="price">
                                         <input type="hidden" value="{{ $product->img_link }}" name="img_link">
                                         <input type="hidden" value="1" name="quantity">
-                                        <p class=" mt-3">Add To Cart</p>
+                                        <p class="mt-3">
+                                            <button class="btn btn-success">Add To Cart</button>
+                                        </p>
                                     </button>
                                 </form>
                             </div>

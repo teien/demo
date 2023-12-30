@@ -15,10 +15,10 @@
                     <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('about') ? 'active' : '' }}" href="/about">Giới thiệu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/cart">Sản phẩm</a>
+                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/product">Sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="#">Blog</a>
+                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/blog">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}"  href="/contact">Liên hệ</a>

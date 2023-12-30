@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
- @include('includes.header')
+    @include('includes.header')
     <div class="container-fluid">
         <div class="distance"></div>
         <div class="container">
@@ -111,7 +111,7 @@
         </div>
         @include('product.hot_product')
         <div class="distance"></div>
-        @include('product.sale_product')
+
         <div class="container">
             <h2 class="text-center mt-4 mb-4">Tại sao chọn xxiv store</h2>
             <div class="row">
@@ -137,20 +137,23 @@
                     </div>
                 </div>
             </div>
-            <div id="Letter" class="Letter text-center">
-                <h1>Đăng ký thành viên để nhận khuyến mại</h1>
-                <p>Theo dõi chúng tôi để nhận thêm nhiều ưu đãi</p>
-                <div class="d-flex justify-content-center">
-                    <input type="text" placeholder="nhập mail" />
-                    <a class="mail-btn">Đăng kí</a>
-                </div>
-            </div>
+
+
 
             <div class="Follow d-flex justify-content-center">
                 <i class="fa-brands fa-facebook"></i>
                 <i class="fa-brands fa-instagram"></i>
                 <i class="fa-brands fa-youtube"></i>
                 <i class="fa-brands fa-telegram"></i>
+            </div>
+        </div>
+        <div class="img-home"></div>
+        <div id="Letter" class="Letter text-center">
+            <h1>Đăng ký thành viên để nhận khuyến mại</h1>
+            <p>Theo dõi chúng tôi để nhận thêm nhiều ưu đãi</p>
+            <div class="d-flex justify-content-center">
+                <input type="text" placeholder="nhập mail" />
+                <a class="mail-btn">Đăng kí</a>
             </div>
         </div>
     </div>

@@ -553,3 +553,41 @@
     position: relative;
     z-index: 1;
 }
+/*blog*/
+.custom-style:hover {
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.15); /* Hiệu ứng bóng */
+    transition: box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+
+  .btn-filter-blog{
+    font-size: 18px;
+    font-weight:500;
+    color: #6e6e6e;
+    padding: 5px 30px;
+    border-radius: 50px;
+    border: 2px solid #e6e6e6;
+    background-color: #fff;
+    margin: 70px 10px;
+  }
+
+  .btn-filter-blog:hover{
+    font-size: 18px;
+    font-weight:500;
+    color: #fff;
+    padding: 5px 30px;
+    border-radius: 50px;
+    border: 2px solid #e6e6e6;
+    background-color: #47c9e5;
+    margin: 70px 10px;
+  }
+  /*home*/
+  .img-home {
+    height: 1000px;
+    background-image: url('https://xxivstore.com/wp-content/themes/yootheme/cache/f1/Cua-hang-Ha-Noi-scaled-f135b0a3.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-align: center;
+    padding: 100px;
+    color: white;
+}

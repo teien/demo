@@ -2,9 +2,13 @@
 
 use App\Admin\Controllers\AdminProductsController;
 use App\Admin\Controllers\AdminUserController;
+use App\Admin\Controllers\AdminCommentsController;
+use App\Admin\Controllers\AdminOrderDetailsController;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use App\Admin\Controllers\AdminOrderController;
+use App\Admin\Controllers\AdminContactsController;
 
 
 Admin::routes();
@@ -18,5 +22,9 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('/auth/user', AdminUserController::class);
     $router->resource('/products', AdminProductsController::class);
+    $router->resource('/comments', AdminCommentsController::class);
+    $router->resource('/order', AdminOrderController::class);
+    $router->resource('/order-details', AdminOrderDetailsController::class);
+    $router->resource('/contacts', AdminContactsController::class);
 
 });

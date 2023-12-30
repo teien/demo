@@ -373,7 +373,7 @@
                                                     <div class="col-lg-4">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="billing-email-address">Email</label>
-                                                            <input type="email" class="form-control" id="billing-email-address" placeholder="Enter email" value="{{ Auth::user()->email }}"readonly>
+                                                            <input type="email" class="form-control" id="billing-email-address" placeholder="Enter email" value="{{ Auth::user()->email }}" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -408,7 +408,7 @@
                             </div>
                         </li>
 
-                        <li class="checkout-item">
+                        <!--  <li class="checkout-item">
                             <div class="avatar checkout-icon p-1">
                                 <div class="avatar-title rounded-circle bg-primary">
                                     <i class="bx bxs-wallet-alt text-white font-size-20"></i>
@@ -507,7 +507,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li>-->
                     </ol>
                 </div>
 
@@ -520,11 +520,11 @@
                 </div>
                 <div class="col">
                     <div class="text-end mt-2 mt-sm-0">
-                        <form action="">
-                            <button type="submit"  id="proceedButton" class="btn btn-success">
-                                <i class="mdi mdi-cart-outline me-1"></i> Procced
+                        <form action="/checkout/success/">
+                            <button type="submit" id="proceedButton" class="btn btn-success">
+                                <i class="mdi mdi-cart-outline me-1"></i> Proceed
                             </button>
-                            </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -552,28 +552,27 @@
 
         var orderCusTotalPrice = document.getElementById('totalPrice').dataset.price;
         proceedButton.addEventListener('click', function(event) {
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('checkout.store') }}",
-            data: {
-                fullname: orderCusName,
-                email: orderCusMail,
-                address: orderCusAddress,
-                phone: orderCusPhone,
-                amount: orderCusTotalPrice,
-                _token: '{{ csrf_token() }}',
-            },
-            success: function(response) {
-                console.log(response.message);
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('checkout.store') }}",
+                data: {
+                    fullname: orderCusName,
+                    email: orderCusMail,
+                    address: orderCusAddress,
+                    phone: orderCusPhone,
+                    amount: orderCusTotalPrice,
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    console.log(response.message);
 
-                sessionStorage.clear();
 
-            },
-            error: function(error) {
-                console.log(error);
-            }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
         });
-    });
     });
 </script>
 

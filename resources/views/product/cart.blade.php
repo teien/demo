@@ -93,7 +93,10 @@
                             <p class="mb-2 fw-bold" id="finalPrice"> </p>
                         </div>
                         <div class="mt-3">
-                            <a href="#" class="btn btn-success w-100 shadow-0 mb-2" id="makePurchaseButton"> Make Purchase </a>
+                            <a href="/checkout" class="btn btn-success w-100 shadow-0 mb-2" id="makePurchaseButton"> Make Purchase <?php
+session()->forget('selectedProducts');
+?>
+</a>
                             <a href="#" class="btn btn-light w-100 border mt-2"> Back to shop </a>
                         </div>
                     </div>
@@ -140,9 +143,8 @@
             });
         });
         makePurchaseButton.addEventListener('click', function(event) {
-            event.preventDefault();
-
             var selectedProducts = getSelectedProducts();
+            event.preventDefault();
             console.log(selectedProducts)
             if (selectedProducts.length === 0) {
                 alert('Please check at least one checkbox before making a purchase.');
@@ -157,8 +159,7 @@
                     },
                     success: function(response) {
                         console.log(response.message);
-
-                        window.location.href = "{{ url('checkout') }}";
+                        window.location.href = "{{ route('checkout.list') }}";
                     },
                     error: function(error) {
                         console.log(error);

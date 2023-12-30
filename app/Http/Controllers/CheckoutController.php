@@ -7,6 +7,7 @@ use App\Models\Products;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetails;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 
 class CheckoutController extends Controller
@@ -29,11 +30,11 @@ class CheckoutController extends Controller
     {
 
         $selectedProducts = session('selectedProducts', []);
-
         $products = Products::all();
         if (empty($selectedProducts)) {
             return redirect()->route('home');
         }
+
         return view('product.checkout', compact('selectedProducts', 'products'));
     }
 
@@ -57,22 +58,34 @@ class CheckoutController extends Controller
             'amount' => $validatedData['amount'],
             'email' => $validatedData['email'],
         ]);
-
-
+        $order->save();
+        $order_id = $order->id;
+        session(['current_order_id' => $order_id]);
         $selectedProducts = session('selectedProducts', []);
         foreach ($selectedProducts as $product) {
-            OrderDetails::create([
-                'product_id' => $product['id'],
-                'order_id' => $order->id,
-                'price' => $product['price'], // Tùy thuộc vào cách bạn lưu giá sản phẩm
-                'quantity' => $product['quantity'],
-                'fullname' => $validatedData['fullname'],
-            ]);
+            if (isset($product['id'], $product['price'], $product['quantity'])) {
+                OrderDetails::create([
+                    'product_id' => $product['id'],
+                    'order_id' => $order_id,
+                    'price' => $product['price'],
+                    'quantity' => $product['quantity'],
+                    'fullname' => $validatedData['fullname'] ?? '',
+                ]);
+                Cart::remove($product['id']);
+            }
         }
+
 
         return response()->json('done');
     }
+    public function checkoutSuccess()
+    {
+        $order = Order::find(session('current_order_id'));
+        $orderDetails = OrderDetails::where('order_id', session('current_order_id'))->get();
 
+
+        return view('alert.sucessOrder', compact('order', 'orderDetails'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -85,10 +98,8 @@ class CheckoutController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+
+
 
     /**
      * Show the form for editing the specified resource.

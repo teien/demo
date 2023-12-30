@@ -26,7 +26,7 @@ class AdminProductsController extends AdminController
     {
         $grid = new Grid(new Products());
         $grid->column('id', __('ID'));
-        $grid->column('CATALOG_ID', __('CATALOG ID'))->editable();
+        $grid->column('catalog_id', __('catalog_id'))->editable();
         $grid->column('name', __('Name'))->editable();
         $grid->column('price', __('Price'))->editable();
         $grid->column('amount', __('Amount'))->editable();
