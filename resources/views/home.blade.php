@@ -178,7 +178,8 @@
                         dots: false
                     },
                     600: {
-                        items: 2,
+
+                        items: 1,
                         nav: false,
                         dots: false
                     },
@@ -221,10 +222,10 @@
                         var notification = $('#notification');
                         notification.addClass('show');
 
-                        // Hide the notification after 3 seconds (adjust as needed)
+
                         setTimeout(function() {
                             notification.removeClass('show');
-                        }, 5000);
+                        }, 3000);
                         updateCartInHeader();
                     },
                     error: function(error) {

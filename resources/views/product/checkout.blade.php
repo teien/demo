@@ -361,7 +361,7 @@
                                 <div>
                                     <h5 class="font-size-16 mb-1">Billing Info</h5>
                                     <div class="mb-3">
-                                        <form class="order-input">
+                                        <form class="order-input" action="/checkout/success/">
                                             <div>
                                                 <div class="row">
                                                     <div class="col-lg-4">
@@ -379,13 +379,30 @@
                                                     <div class="col-lg-4">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="billing-phone">Phone</label>
-                                                            <input type="text" class="form-control" id="billing-phone" placeholder="Enter Phone no." value="{{ Auth::user()->phone }}">
+                                                            <input type="text" class="form-control" id="billing-phone" placeholder="Enter Phone no." value="{{ Auth::user()->phone }}" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label" for="billing-address">Address</label>
-                                                    <textarea class="form-control" data-address="" id="billing-address" rows="3" placeholder="Enter full address"></textarea>
+                                                    <textarea class="form-control" data-address="" id="billing-address" rows="3" placeholder="Enter full address" required></textarea>
+                                                </div>
+                                                <div class="row my-4">
+                                                    <div class="col">
+                                                        <a href="products" class="btn btn-link text-muted">
+                                                            <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping
+                                                        </a>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="text-end mt-2 mt-sm-0">
+
+                                                                <button type="submit" id="proceedButton" class="btn btn-success">
+                                                                    <i class="mdi mdi-cart-outline me-1"></i> Proceed
+                                                                    <?php session()->forget('current_order_id'); ?>
+                                                                </button>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <!-- <div class="row">
                                                     <div class="col-lg-4">
@@ -402,7 +419,7 @@
                                                     </div>
                                                 </div> -->
                                             </div>
-                                        </form>
+                                        </>
                                     </div>
                                 </div>
                             </div>
@@ -510,24 +527,8 @@
                         </li>-->
                     </ol>
                 </div>
+            </div>
 
-            </div>
-            <div class="row my-4">
-                <div class="col">
-                    <a href="products" class="btn btn-link text-muted">
-                        <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping
-                    </a>
-                </div>
-                <div class="col">
-                    <div class="text-end mt-2 mt-sm-0">
-                        <form action="/checkout/success/">
-                            <button type="submit" id="proceedButton" class="btn btn-success">
-                                <i class="mdi mdi-cart-outline me-1"></i> Proceed
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -540,8 +541,6 @@
         var orderCusPhone;
         var orderCusName = document.getElementById('billing-name').value;
         var orderCusMail = document.getElementById('billing-email-address').value;
-
-
         document.getElementById("billing-address").addEventListener("input", function(event) {
             orderCusAddress = event.target.value;
         });
@@ -575,6 +574,7 @@
         });
     });
 </script>
+
 
 
 </html>

@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout-add', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'storeCheckout'])->name('checkout.store');
     Route::get('/checkout/success/', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
+    Route::get('/profile/order',[UserController::class, 'ordersList'])->name('user.order');
 });
 
 
@@ -62,13 +63,15 @@ Route::get('/product/{id}', [ProductDetailController::class, 'show'])->name('pro
 Route::get('/product', [ProductDetailController::class, 'index']);
 Route::post('/contact', [ContactController::class, 'store']);
 Route::post('/comment/{id}', [ProductDetailController::class, 'post_comment'])->name('product.comment');
-Route::get('/product/{id}', [ProductDetailController::class, 'comment']);
+
 Route::get('/comment/delete/{id}', [ProductDetailController::class, 'destroy']);
 
-Route::get('/product', [App\Http\Controllers\ProductController::class, 'index']);//view dtb ra trang product
 Route::get('/product', [App\Http\Controllers\ProductController::class, 'product'])->name('products.filter');
-Route::get('/search', [App\Http\Controllers\ProductController::class, 'search'])->name('search');
-Route::get('/products/search', [ProductController::class, 'search2'])->name('products.search');
+
+Route::get('/search', [App\Http\Controllers\ProductController::class, 'product'])->name('search');
+Route::get('/product/search', [ProductController::class, 'product'])->name('products.search');
+
+
 
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index']);
 Route::get('/about', [App\Http\Controllers\IntroController::class, 'index']);

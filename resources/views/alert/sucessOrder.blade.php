@@ -48,7 +48,7 @@
         <span>Nước hoa: </span>
             @foreach ($orderDetails as $detail)
 
-            <span> {{$detail->product->name}} x {{$detail->quantity}},</span>
+            <span> {{$detail->products->name}} x {{$detail->quantity}},</span>
             @endforeach</p>
         <p><strong>Tổng Tiền: {{number_format($order->amount,0,',', '.')}} đ</strong> </p>
         <p><strong>Địa Chỉ Giao Hàng:</strong> {{$order->address}}.</p>

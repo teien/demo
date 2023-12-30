@@ -8,11 +8,11 @@ use App\Models\Products;
 class OrderDetails extends Model
 {
     use HasFactory;
-    public function order()
+    public function orders()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class,'order_id');
     }
-    public function product()
+    public function products()
 {
     return $this->belongsTo(Products::class, 'product_id');
 }

@@ -82,8 +82,6 @@ class CheckoutController extends Controller
     {
         $order = Order::find(session('current_order_id'));
         $orderDetails = OrderDetails::where('order_id', session('current_order_id'))->get();
-
-
         return view('alert.sucessOrder', compact('order', 'orderDetails'));
     }
 

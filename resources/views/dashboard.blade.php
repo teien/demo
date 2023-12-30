@@ -12,27 +12,30 @@
 </head>
 
 <body>
-    @include('includes.header')
+@include('includes.header')
     <div class="distance"></div>
-    <div class="container">
-        <h1>Tài khoản của tôi</h1>
-        <div class="row mt-5">
-            <ul class="list-group list-group-flush col-3">
-                <li class="list-group-item"><a href="" class="text-decoration-none fs-4 text-dark">Trang tài khoản</a></li>
-                <li class="list-group-item"><a href="" class="text-decoration-none fs-4 text-dark">Đơn hàng</a></li>
-                <li class="list-group-item"><a href="" class="text-decoration-none fs-4 text-dark">Địa chỉ</a></li>
-                <li class="list-group-item"><a href="/user/profile" class="text-decoration-none fs-4 text-dark">Tài khoản</a></li>
-                <li class="list-group-item"><a class="text-decoration-none fs-4 text-dark">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" style="all: unset; cursor: pointer;" > Thoát</button>
-                        </form>
-                    </a></li>
-            </ul>
-            <div class="col-1" style="border-left:solid 4px #f0f0f0 ; height: 300px;"></div>
-            <p class="col-8 fs-5 mt-5">
+    <div class="container-fluid">
+        <div style="margin: 0 8%;">
+
+            <div class="row mt-5">
+
+                <ul class="list-group list-group-flush col-3">
+                <li class="list-group-item"> <h1 style="margin-top: 100px;">Tài khoản của tôi </h1> </l1>
+                    <li class="list-group-item"><a href="/profile" class="text-decoration-none fs-4 text-dark">Trang tài khoản</a></li>
+                    <li class="list-group-item"><a href="/profile/order" class="text-decoration-none fs-4 text-dark">Đơn hàng</a></li>
+
+                    <li class="list-group-item"><a href="/user/profile" class="text-decoration-none fs-4 text-dark">Tài khoản</a></li>
+                    <li class="list-group-item"><a class="text-decoration-none fs-4 text-dark">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" style="all: unset; cursor: pointer;"> Thoát</button>
+                            </form>
+                        </a></li>
+                </ul>
+
+            <p class="col-8 fs-5 ms-5" style="margin-top: 250px ;">
                 Xin chào <a href="#"class="fs-5 text-decoration-none">{{$name}}</a> (Nếu không phải tài khoản <a href="#"class="fs-5 text-decoration-none"> {{$name}} </a>. Hãy Thoát ra và Đăng nhập vào tài khoản của bạn).
-                Từ trang quản lý tài khoản bạn có thể xem đơn hàng mới, quản lý địa chỉ giao hàng và thanh toán, and sửa mật khẩu và thông tin tài khoản.
+                Từ trang quản lý tài khoản bạn có thể xem đơn hàng, sửa mật khẩu và thông tin tài khoản. Xin cảm ơn bạn đã mua hàng của chúng tôi!
             </p>
         </div>
         <div id="Letter" class="Letter text-center mb-5">

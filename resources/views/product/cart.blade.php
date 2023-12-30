@@ -7,7 +7,7 @@
             <div class="col-lg-9">
                 <div class="card border shadow-0" style="min-height: 530px;">
                     <div class="m-4">
-                        <h4 class="card-title mb-5 text-center">Your shopping cart</h4>
+                        <h3 class="card-title mb-5 text-center">Giỏ Hàng</h3>
                         @foreach ($cartItems as $item)
 
                         <div class="row mb-5 align-items-center text-center border-bottom update-input">
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="float-md-end">
                                     <text class="h6"> {{ number_format(($item->price) * ($item->quantity), 0, ',', '.') }} đ </text> <br />
-                                    <small class="text-muted text-nowrap item-price" name="price" data-price=" {{ $item->price }}">{{ number_format($item->price,0, ',', '.') }} đ / per item </small>
+                                    <small class="text-muted text-nowrap item-price" name="price" data-price=" {{ $item->price }}">{{ number_format($item->price,0, ',', '.') }} đ / 1 sản phẩm </small>
                                 </div>
                             </div>
                             <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
@@ -43,7 +43,7 @@
                                     <form action="{{ route('cart.remove') }}" method="POST">
                                         @csrf
                                         <input type="hidden" value="{{ $item->id }}" name="id">
-                                        <button class="btn btn-light border text-danger icon-hover-danger">Remove</button>
+                                        <button class="btn btn-light border text-danger icon-hover-danger">Xóa</button>
                                     </form>
                                 </div>
                             </div>
@@ -83,11 +83,11 @@
                             <p class="mb-2">Discount:</p>
                             <p class="mb-2 text-success">-$60.00</p>
                         </div>
-                        <div class="d-flex justify-content-between">
+                      <!--   <div class="d-flex justify-content-between">
                             <p class="mb-2">TAX:</p>
                             <p class="mb-2">$14.00</p>
-                        </div>
-                        <hr />
+                        </div> -->
+                       <hr />
                         <div class="d-flex justify-content-between">
                             <p class="mb-2">Total price:</p>
                             <p class="mb-2 fw-bold" id="finalPrice"> </p>
@@ -110,7 +110,6 @@ session()->forget('selectedProducts');
     document.addEventListener('DOMContentLoaded', function() {
         var updateInputs = document.querySelectorAll('.update-input');
         var makePurchaseButton = document.getElementById('makePurchaseButton');
-        console.log(makePurchaseButton)
         updateInputs.forEach(function(updateInput) {
             updateInput.addEventListener('change', function() {
                 var checkboxChecked = updateInput.querySelector('[name="checkbox-product"]').checked;
@@ -144,7 +143,6 @@ session()->forget('selectedProducts');
         });
         makePurchaseButton.addEventListener('click', function(event) {
             var selectedProducts = getSelectedProducts();
-            event.preventDefault();
             console.log(selectedProducts)
             if (selectedProducts.length === 0) {
                 alert('Please check at least one checkbox before making a purchase.');

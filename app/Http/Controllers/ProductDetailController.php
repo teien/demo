@@ -10,7 +10,10 @@ class ProductDetailController extends Controller
     public function show(string $id)
     {
         $product = Products::where('id', '=', $id)->select('*')->first();
-        return view('product_detail' , compact('product'));
+        $catalog_id = $product->catalog_id;
+        $sameProducts = Products::where('catalog_id', $catalog_id )->get();
+        $comments = Comments::where('product_id',$product->id)->orderBy('id' , 'DESC')->get();
+        return view('product_detail' , compact('product','comments','sameProducts'));
     }
 
     public function index (){
@@ -31,12 +34,6 @@ class ProductDetailController extends Controller
         return redirect()->back();
     }
 
-    public function comment(Products $product , $id)
-    {
-        $product = Products::where('id', '=', $id)->select('*')->first();
-        $comments = Comments::where('product_id',$product->id)->orderBy('id' , 'DESC')->get();
-        return view('product_detail' , compact('product','comments'));
-    }
 
 
     public function destroy(string $id)
