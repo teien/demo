@@ -46,7 +46,7 @@
                 <a class="align-content-center text-decoration-none text-center d-block">THƯƠNG HIỆU NỔI TIẾNG</a>
                 <div class="listbrand row card-img-top d-flex flex-wrap">
                     <div class="col-2  imgbrand">
-                        <a class="logobrand" href="#">
+                        <a class="logobrand" href="product?catalog=7">
                             <img class="img-fluid m-3" src="https://xxivstore.com/wp-content/uploads/2023/11/Nuoc-hoa-Clive-Christian.png">
                         </a>
                     </div>

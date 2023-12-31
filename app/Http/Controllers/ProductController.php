@@ -11,7 +11,8 @@ class ProductController extends Controller
 {
     public function product(Request $request)
     {
-        $catalogId = $request->query('catalogs');
+        $catalogId = $request->query('catalog');
+
         $catalog = null;
 
         // filter  list

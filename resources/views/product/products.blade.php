@@ -144,10 +144,11 @@
             </div>
 
             <div class="d-flex col mb-5">
-                <div class="d-flex col flex-wrap text-center gap-3 ms-lg-5 product-card">
+                <div class=" d-flex col flex-wrap text-center gap-3 ms-lg-5 product-card">
                     @foreach($products as $row)
-                    @if (($catalog === null || $row->catalog_id == $catalog->id) && ($genderFilter === null || $row->sex == $genderFilter)&& ($priceRange === null || ($row->price >= $priceRange[0] && $row->price <= $priceRange[1]))) <div class="products shadow ">
-                        <div class="pro ">
+                    @if (($catalog === null || $row->catalog_id == $catalog->id) && ($genderFilter === null || $row->sex == $genderFilter)&& ($priceRange === null || ($row->price >= $priceRange[0] && $row->price <= $priceRange[1])))
+                    <div class="products">
+                        <div class="pro">
                             <img class="pic" src="{{ asset($row->img_link) }}" alt="" onclick="redirectToProductDetail('{{ $row->id }}')" />
                             <div class="des">
                                 <h5 class="prname" onclick="redirectToProductDetail('{{ $row->id }}')">{{$row->name}}</h5>
@@ -177,8 +178,10 @@
                                 </form>
                             </div>
                         </div>
+
                 </div>
                 @endif
+
                 @endforeach
             </div>
         </div>

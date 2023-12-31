@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Caterories extends Model
 {
     use HasFactory;
-    protected $table = 'catalog';
+    protected $table = 'catalogs';
 }

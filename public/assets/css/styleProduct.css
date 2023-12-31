@@ -43,7 +43,9 @@
   }
 
   .products {
+    max-height:410px ;
     padding: 30px;
+    box-shadow: #999 inset 0 0 10px;
 }
   .products .pic {
     transition: transform 3.5s ease;
