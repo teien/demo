@@ -51,6 +51,7 @@
             <span> {{$detail->products->name}} x {{$detail->quantity}},</span>
             @endforeach</p>
         <p><strong>Tổng Tiền: {{number_format($order->amount,0,',', '.')}} đ</strong> </p>
+
         <p><strong>Địa Chỉ Giao Hàng:</strong> {{$order->address}}.</p>
         <p class="text-center fs-3"><a class="text-decoration-none" href="/home">Trở về trang chủ</a></p>
     </div>

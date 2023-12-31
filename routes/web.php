@@ -56,12 +56,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/success/', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
     Route::get('/profile/order',[UserController::class, 'ordersList'])->name('user.order');
 });
-
+Route::post('/coupon/check',[CartController::class, 'applyCoupon'])->name('coupon.check');
 
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index']);
+Route::post('/contact', [ContactController::class, 'store']);
+
 Route::get('/product/{id}', [ProductDetailController::class, 'show'])->name('product.detail');
 Route::get('/product', [ProductDetailController::class, 'index']);
-Route::post('/contact', [ContactController::class, 'store']);
 Route::post('/comment/{id}', [ProductDetailController::class, 'post_comment'])->name('product.comment');
 
 Route::get('/comment/delete/{id}', [ProductDetailController::class, 'destroy']);

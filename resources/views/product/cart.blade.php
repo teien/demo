@@ -13,7 +13,7 @@
                             <div class="col-lg-5">
                                 <div class="me-lg-5">
                                     <div class="d-flex align-items-center text-center">
-                                        <input type="checkbox" name="checkbox-product">
+                                        <input type="checkbox" name="checkbox-product" onclick="checkCheckboxes()">
 
                                         <img src="{{ asset($item->attributes->first()) }}" name="imgProduct" data-img="{{$item->attributes->first()}}" width="100" alt="Thumbnail" loading="lazy" />
                                         <div class="">
@@ -50,9 +50,11 @@
                         @endforeach
                         <div class="border-top pt-4 mx-4 mb-4">
                             <p><i class="fas fa-truck text-muted fa-lg">
-                                </i> Free Delivery within 1-2 weeks</p>
+                                </i> Đơn hàng của bạn sẽ được giao hàng miễn phí trong khoảng thời gian 1-2 tuần.</p>
                             <p class="text-muted">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                Chúng tôi mong muốn bạn lưu ý rằng thời gian giao hàng có thể thay đổi tùy thuộc vào nhiều yếu tố khác nhau như địa chỉ giao hàng, điều kiện thời tiết, và các yếu tố vận chuyển khác. Chúng tôi sẽ cố gắng hết sức để đảm bảo đơn hàng của bạn được giao đúng hẹn.
+
+                                Nếu có bất kỳ thay đổi nào đối với thời gian giao hàng dự kiến, chúng tôi sẽ thông báo cho bạn trước để bạn có thể theo dõi tình trạng của đơn hàng một cách thuận lợi nhất. Xin cảm ơn bạn đã hiểu và đồng hành cùng chúng tôi.
                             </p>
                         </div>
                     </div>
@@ -61,42 +63,57 @@
             <div class="col-lg-3">
                 <div class="card mb-3 border shadow-0">
                     <div class="card-body">
-                        <form>
-                            <div class="form-group">
-                                <label class="form-label">Have coupon?</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control border" name="" placeholder="Coupon code" />
-                                    <button class="btn btn-light border">Apply</button>
+                        <form action="{{ route('coupon.check') }}" method="POST">
+                            @csrf
+                            <label class="form-label" for="coupon">Bạn có mã giảm giá?</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control border" name="coupon" id="coupon" value="{{ old('username') }}" placeholder="Coupon code" />
+                                <button type="submit" class="btn btn-light border">Apply</button> </br>
+                                @if(session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+
                                 </div>
+                                @endif
+
+                                @if(session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                                @endif
                             </div>
+                            @if(session('couponCode'))
+                            <p>Mã Giảm Giá: {{ $couponCode = session('couponCode') }}</p>
+                            @endif
                         </form>
+
                     </div>
                 </div>
                 <div class="card shadow-0">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <p class="mb-2">Total price:</p>
+                            <p class="mb-2">Tổng tiền:</p>
                             <p class="mb-2" id="totalPrice"> </p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <p class="mb-2">Discount:</p>
-                            <p class="mb-2 text-success">-$60.00</p>
+                            <p class="mb-2 text-success" id="discount" data-discount="{{ $couponCode = session('discount_amount') }}">{{ $couponCode = session('discount_amount') ?? 0 }} %</p>
                         </div>
-                        <!--   <div class="d-flex justify-content-between">
-                            <p class="mb-2">TAX:</p>
-                            <p class="mb-2">$14.00</p>
-                        </div> -->
+                        <div class="d-flex justify-content-between">
+                            <p class="mb-2">Free Ship:</p>
+                            <p class="mb-2">0 đ</p>
+                        </div>
                         <hr />
                         <div class="d-flex justify-content-between">
-                            <p class="mb-2">Total price:</p>
+                            <p class="mb-2">Tổng thanh toán:</p>
                             <p class="mb-2 fw-bold" id="finalPrice"> </p>
                         </div>
                         <div class="mt-3">
-                            <a href="/checkout" class="btn btn-success w-100 shadow-0 mb-2" id="makePurchaseButton"> Make Purchase <?php
+                            <a href="/checkout" class="btn btn-success w-100 shadow-0 mb-2" id="makePurchaseButton"> Mua hàng <?php
                                                                                                                                     session()->forget('selectedProducts');
                                                                                                                                     ?>
                             </a>
-                            <a href="#" class="btn btn-light w-100 border mt-2"> Back to shop </a>
+                            <a href="#" class="btn btn-light w-100 border mt-2"> Quay lại </a>
                         </div>
                     </div>
                 </div>
@@ -146,7 +163,7 @@
             if (selectedProducts.length === 0) {
                 alert('Please check at least one checkbox before making a purchase.');
             } else {
-                // Gửi dữ liệu đến route '/checkout' bằng Ajax
+
                 $.ajax({
                     type: 'POST',
                     url: "{{ route('checkout') }}",
@@ -169,10 +186,13 @@
         });
 
         function updateTotalProduct() {
+            var discountElement = document.getElementById('discount');
+            var discountValue = discountElement.dataset.discount;
             var totalPriceElement = document.getElementById('totalPrice');
             var finalPriceElement = document.getElementById('finalPrice');
             var selectedProducts = document.querySelectorAll('.update-input [name="checkbox-product"]:checked');
             var totalProductPrice = 0;
+            var totalProductPriceDiscount = 0;
             selectedProducts.forEach(function(selectedProduct) {
                 var updateInput = selectedProduct.closest('.update-input');
                 var productQuantity = updateInput.querySelector('[name="quantity"]').value;
@@ -180,7 +200,7 @@
                 var price = quantityInput.dataset.price;
                 totalProductPrice += price * productQuantity;
             });
-
+            totalProductPriceDiscount = totalProductPrice - (totalProductPrice * discountValue / 100);
             totalPriceElement.textContent = Intl.NumberFormat('vi-VN', {
                 style: 'currency',
                 currency: 'VND'
@@ -188,8 +208,8 @@
             finalPriceElement.textContent = Intl.NumberFormat('vi-VN', {
                 style: 'currency',
                 currency: 'VND'
-            }).format(totalProductPrice);
-            return totalProductPrice;
+            }).format(totalProductPriceDiscount);
+            return totalProductPriceDiscount;
         }
 
         function updateCartInHeader() {
@@ -232,7 +252,33 @@
             });
             return selectedProducts;
         }
+        window.onload = function() {
+        var checkboxes = document.querySelectorAll('input[name="checkbox-product"]');
+        checkboxes.forEach(function(checkbox) {
+            var isChecked = localStorage.getItem(checkbox.id) === 'true';
+            checkbox.checked = isChecked;
+
+        });
+        getSelectedProducts();
+        updateTotalProduct();
+    };
+
+    function checkCheckboxes() {
+        var checkboxes = document.querySelectorAll('input[name="checkbox-product"]');
+
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                console.log(checkbox.id + ' đã được chọn.');
+            } else {
+                console.log(checkbox.id + ' không được chọn.');
+            }
+
+            // Lưu trạng thái vào localStorage
+            localStorage.setItem(checkbox.id, checkbox.checked);
+        });
+    }
     });
+
 </script>
 
 @endsection

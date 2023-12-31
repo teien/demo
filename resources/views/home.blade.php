@@ -153,7 +153,7 @@
             <p>Theo dõi chúng tôi để nhận thêm nhiều ưu đãi</p>
             <div class="d-flex justify-content-center">
                 <input type="text" placeholder="nhập mail" />
-                <a class="mail-btn">Đăng kí</a>
+                <a href="/register" class="mail-btn">Đăng kí</a>
             </div>
         </div>
     </div>

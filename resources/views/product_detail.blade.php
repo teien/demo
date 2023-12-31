@@ -24,13 +24,11 @@
             </div>
 
             <div class="container mt-5 ">
-                <div class="row">
-                    <div class="col-6 ">
-                        <div class="d-flex ">
-                                <img class="product-img border shadow-white zoom_img " width="400px"  src="{{asset($product->img_link)}}" alt="" >
-                        </div>
+                <div class="row gap-2">
+                    <div class="col ">
+                                <img class="product-img border shadow-white zoom_img " width="380px"  src="{{asset($product->img_link)}}" alt="" >
                     </div>
-                    <div class="col-6">
+                    <div class="col">
                         <div class="mt-4">
                             <h1 class="product-name fa-3x ">{{$product->name }}</h1>
                             <p class="gender-wrap ms-3"> {{$product->sex}}</p>
@@ -69,7 +67,7 @@
 
                 <div class="row" >
                     <h2 class="text-center mt-5">Sản phẩm liên quan</h2>
-                    <div class="d-flex col mb-5 mt-5">
+                    <div class="d-flex col mb-5 mt-5 ms-5">
                         <div class="d-flex col flex-wrap text-center gap-3 ms-lg-5 product-card">
                             @foreach($sameProducts as $row)
                             <div class="products shadow ">

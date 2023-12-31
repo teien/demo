@@ -242,6 +242,7 @@ body {
   }
 
   .inputForm {
+    width: 100%;
     border: 1.5px solid #ecedec;
     border-radius: 10px;
     height: 50px;
@@ -366,6 +367,7 @@ body {
     width: 200px;
     border: 1px solid #d0d0d0;
     margin-left: 15px;
+    cursor: pointer;
   }
 
   .mail-btn:hover {

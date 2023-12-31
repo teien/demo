@@ -49,6 +49,7 @@ class CheckoutController extends Controller
             'address' => 'required',
             'amount' => 'required',
             'email' => 'required|email',
+            'coupon' => 'nullable',
         ]);
 
         $order = Order::create([

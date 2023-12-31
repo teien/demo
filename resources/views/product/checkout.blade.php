@@ -310,7 +310,7 @@
                     <div class="card-body">
                         <div class="card border shadow-0">
                             <div class="m-4">
-                                <h4 class="card-title mb-5 text-center">Your shopping cart</h4>
+                                <h4 class="card-title mb-5 text-center">Giỏ hàng của bạn</h4>
 
 
 
@@ -332,7 +332,7 @@
 
                                         <div class="flex flex-row me-5">
                                             <span class="m-4 me-5">{{ $item['quantity'] }}</span>
-                                            <text class=" text-nowrap item-price ms-5"> {{ number_format($item['price'],0,',', '.') }}đ / per item </text>
+                                            <text class=" text-nowrap item-price ms-5"> {{ number_format($item['price'],0,',', '.') }}đ / 1 sản phẩm </text>
                                         </div>
 
 
@@ -346,7 +346,8 @@
 
 
                                 @endforeach
-                                <h3 id="totalPrice" data-price="{{ $item['totalPrice'] }}">Total price: {{number_format($item['totalPrice'],0,',', '.')}} đ </h3>
+                                            <h3 id="totalPrice" data-price="{{ $item['totalPrice'] }}">Tổng thanh toán: {{number_format($item['totalPrice'],0,',', '.')}} đ </h3>
+
                             </div>
                         </div>
                     </div>
@@ -359,14 +360,14 @@
                             </div>
                             <div class="feed-item-list">
                                 <div>
-                                    <h5 class="font-size-16 mb-1">Billing Info</h5>
+                                    <h5 class="font-size-16 mb-1">Thông tin liên hệ</h5>
                                     <div class="mb-3">
                                         <form class="order-input" action="/checkout/success/">
                                             <div>
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="billing-name">Name</label>
+                                                            <label class="form-label" for="billing-name">Họ và Tên</label>
                                                             <input type="text" class="form-control" id="billing-name" placeholder="Enter name" value="{{ Auth::user()->name }} " readonly>
                                                         </div>
                                                     </div>
@@ -378,28 +379,28 @@
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="billing-phone">Phone</label>
+                                                            <label class="form-label" for="billing-phone">Số điện thoại</label>
                                                             <input type="text" class="form-control" id="billing-phone" placeholder="Enter Phone no." value="{{ Auth::user()->phone }}" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="billing-address">Address</label>
+                                                    <label class="form-label" for="billing-address">Địa chỉ</label>
                                                     <textarea class="form-control" data-address="" id="billing-address" rows="3" placeholder="Enter full address" required></textarea>
                                                 </div>
                                                 <div class="row my-4">
                                                     <div class="col">
                                                         <a href="products" class="btn btn-link text-muted">
-                                                            <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping
+                                                            <i class="mdi mdi-arrow-left me-1"></i> Tiếp tục mua hàng
                                                         </a>
                                                     </div>
                                                     <div class="col">
                                                         <div class="text-end mt-2 mt-sm-0">
 
-                                                                <button type="submit" id="proceedButton" class="btn btn-success">
-                                                                    <i class="mdi mdi-cart-outline me-1"></i> Proceed
-                                                                    <?php session()->forget('current_order_id'); ?>
-                                                                </button>
+                                                            <button type="submit" id="proceedButton" class="btn btn-success">
+                                                                <i class="mdi mdi-cart-outline me-1"></i> Thanh toán
+                                                                <?php session()->forget('current_order_id'); ?>
+                                                            </button>
 
                                                         </div>
                                                     </div>
@@ -419,7 +420,7 @@
                                                     </div>
                                                 </div> -->
                                             </div>
-                                        </>
+                                            </>
                                     </div>
                                 </div>
                             </div>

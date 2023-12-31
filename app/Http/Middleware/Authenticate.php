@@ -12,6 +12,12 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
+
+        if ($request->is('checkout') || $request->is('cart')) {
+            // Lưu trạng thái đường dẫn gốc vào session
+            session(['originalPath' => $request->path()]);
+        }
+
         return $request->expectsJson() ? null : route('login');
     }
 }

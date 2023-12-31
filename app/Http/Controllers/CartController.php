@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 class CartController extends Controller
 {
     /**
@@ -16,7 +17,29 @@ class CartController extends Controller
         return view('product.cart', compact('cartItems'));
     }
 
+    public function applyCoupon(Request $request)
+    {
+        $request->validate([
+            'coupon' => 'required|string',
+        ]);
+        $couponCode = $request->input('coupon');
+        $checkCoupon = DB::table('coupons')->where('coupon_code', $couponCode)->first();
+        if($checkCoupon == null){
+            session()->flash('error', 'Coupon is not Valid !');
+            return redirect()->route('cart.list');
+        }
+        else {
+            $checkCoupon->expiration_date = Carbon::parse($checkCoupon->expiration_date)->format('Y-m-d');
+            $currentDate = Carbon::now()->format('Y-m-d');
 
+            if ($checkCoupon->expiration_date >= $currentDate) {
+                return redirect()->back()->with('success', 'Coupon áp dụng thành công!')->with(['couponCode' => $couponCode, 'discount_amount' => $checkCoupon->discount_amount]);
+            } else {
+                return redirect()->back()->with('error', 'Coupon hết hạn.');
+            }
+        }
+
+    }
 
 
     public function addToCart(Request $request)
