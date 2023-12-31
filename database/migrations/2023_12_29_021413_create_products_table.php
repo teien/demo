@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('catalog_id')->nullable();
             $table->decimal('price', 15, 0)->nullable();
-            $table->integer('amount')->nullable();
+            $table->integer('quantity')->nullable();
             $table->string('img_link')->nullable();
             $table->text('content')->nullable();
             $table->string('sex', 10)->nullable();

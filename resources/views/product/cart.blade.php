@@ -13,8 +13,7 @@
                             <div class="col-lg-5">
                                 <div class="me-lg-5">
                                     <div class="d-flex align-items-center text-center">
-                                        <input type="checkbox" name="checkbox-product" onclick="checkCheckboxes()">
-
+                                        <input type="checkbox" name="checkbox-product" data-id="{{ $item->id }}">
                                         <img src="{{ asset($item->attributes->first()) }}" name="imgProduct" data-img="{{$item->attributes->first()}}" width="100" alt="Thumbnail" loading="lazy" />
                                         <div class="">
                                             <a href="#" class="nav-link font-mono text-success" name="name" data-name="{{ $item->name }}">{{ $item->name }}</a>
@@ -110,8 +109,8 @@
                         </div>
                         <div class="mt-3">
                             <a href="/checkout" class="btn btn-success w-100 shadow-0 mb-2" id="makePurchaseButton"> Mua hàng <?php
-                                                                                                                                    session()->forget('selectedProducts');
-                                                                                                                                    ?>
+                                                                                                                                session()->forget('selectedProducts');
+                                                                                                                                ?>
                             </a>
                             <a href="#" class="btn btn-light w-100 border mt-2"> Quay lại </a>
                         </div>
@@ -253,32 +252,26 @@
             return selectedProducts;
         }
         window.onload = function() {
-        var checkboxes = document.querySelectorAll('input[name="checkbox-product"]');
-        checkboxes.forEach(function(checkbox) {
-            var isChecked = localStorage.getItem(checkbox.id) === 'true';
-            checkbox.checked = isChecked;
+            var checkboxes = document.querySelectorAll('input[name="checkbox-product"]');
+            checkboxes.forEach(function(checkbox,productId) {
+                // Use the product id as the checkbox id
+                var productId = checkbox.dataset.id;
 
-        });
-        getSelectedProducts();
-        updateTotalProduct();
-    };
+                checkbox.id = 'checkbox-product-' + productId;
 
-    function checkCheckboxes() {
-        var checkboxes = document.querySelectorAll('input[name="checkbox-product"]');
+                // Load any saved checkbox state from local storage
+                var isChecked = localStorage.getItem(checkbox.id) === 'true';
+                checkbox.checked = isChecked;
 
-        checkboxes.forEach(function(checkbox) {
-            if (checkbox.checked) {
-                console.log(checkbox.id + ' đã được chọn.');
-            } else {
-                console.log(checkbox.id + ' không được chọn.');
-            }
+                // Save the state to local storage whenever it changes
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(checkbox.id, checkbox.checked);
+                });
+            });
+            updateTotalProduct();
+        }
 
-            // Lưu trạng thái vào localStorage
-            localStorage.setItem(checkbox.id, checkbox.checked);
-        });
-    }
     });
-
 </script>
 
 @endsection

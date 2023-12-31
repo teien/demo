@@ -13,6 +13,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetails::class,'order_id');
     }
+
     protected $fillable = [
         'fullname',
         'address',

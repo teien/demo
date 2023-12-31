@@ -58,6 +58,7 @@ class CheckoutController extends Controller
             'address' => $validatedData['address'],
             'amount' => $validatedData['amount'],
             'email' => $validatedData['email'],
+            'status' => '0',
         ]);
         $order->save();
         $order_id = $order->id;
@@ -65,25 +66,44 @@ class CheckoutController extends Controller
         $selectedProducts = session('selectedProducts', []);
         foreach ($selectedProducts as $product) {
             if (isset($product['id'], $product['price'], $product['quantity'])) {
-                OrderDetails::create([
-                    'product_id' => $product['id'],
-                    'order_id' => $order_id,
-                    'price' => $product['price'],
-                    'quantity' => $product['quantity'],
-                    'fullname' => $validatedData['fullname'] ?? '',
-                ]);
-                Cart::remove($product['id']);
+                $existingProduct = Products::find($product['id']);
+                if ($existingProduct) {
+                    OrderDetails::create([
+                        'product_id' => $product['id'],
+                        'order_id' => $order_id,
+                        'price' => $product['price'],
+                        'quantity' => $product['quantity'],
+                        'fullname' => $validatedData['fullname'] ?? '',
+                    ]);
+                    Cart::remove($product['id']);
+                    $this->updateStock($product['id'], $product['quantity']);
+                }
             }
         }
-
-
-        return response()->json('done');
     }
+    protected function updateStock($productId, $quantity)
+    {
+        $product = Products::find($productId);
+        $order = Order::find(session('current_order_id'));
+        if ($product->quantity >= $quantity) {
+            $product->quantity -= $quantity;
+            $product->save();
+            $order->status = 1;
+            $order->save();
+        } else {
+            return response()->json('Sản phẩm không đủ số lượng, mong bạn thông cảm!');
+        }
+    }
+
     public function checkoutSuccess()
     {
         $order = Order::find(session('current_order_id'));
-        $orderDetails = OrderDetails::where('order_id', session('current_order_id'))->get();
-        return view('alert.sucessOrder', compact('order', 'orderDetails'));
+        if ($order->status == 0) {
+            return view('alert.errorOrder');
+        } else {
+            $orderDetails = OrderDetails::where('order_id', session('current_order_id'))->get();
+            return view('alert.sucessOrder', compact('order', 'orderDetails'));
+        }
     }
 
     /**

@@ -346,7 +346,7 @@
 
 
                                 @endforeach
-                                            <h3 id="totalPrice" data-price="{{ $item['totalPrice'] }}">Tổng thanh toán: {{number_format($item['totalPrice'],0,',', '.')}} đ </h3>
+                                <h3 id="totalPrice" data-price="{{ $item['totalPrice'] }}">Tổng thanh toán: {{number_format($item['totalPrice'],0,',', '.')}} đ </h3>
 
                             </div>
                         </div>
@@ -420,13 +420,13 @@
                                                     </div>
                                                 </div> -->
                                             </div>
-                                            </>
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                </div>
+                </li>
 
-                        <!--  <li class="checkout-item">
+                <!--  <li class="checkout-item">
                             <div class="avatar checkout-icon p-1">
                                 <div class="avatar-title rounded-circle bg-primary">
                                     <i class="bx bxs-wallet-alt text-white font-size-20"></i>
@@ -526,11 +526,11 @@
                                 </div>
                             </div>
                         </li>-->
-                    </ol>
-                </div>
+                </ol>
             </div>
-
         </div>
+
+    </div>
     </div>
 
     </div>
@@ -545,7 +545,6 @@
         document.getElementById("billing-address").addEventListener("input", function(event) {
             orderCusAddress = event.target.value;
         });
-
         document.getElementById('billing-phone').addEventListener("input", function(event) {
             orderCusPhone = event.target.value;
         });
@@ -565,8 +564,6 @@
                 },
                 success: function(response) {
                     console.log(response.message);
-
-
                 },
                 error: function(error) {
                     console.log(error);

@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductDetailController;
+use App\Http\Controllers\OrderController;
 
 
 /*
@@ -55,6 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'storeCheckout'])->name('checkout.store');
     Route::get('/checkout/success/', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
     Route::get('/profile/order',[UserController::class, 'ordersList'])->name('user.order');
+   // Route::get('/order/cancel/{id}',[UserController::class, 'cancelOrder'])->name('order.cancel');
+    Route::post('/order/finish/{orderId}',[OrderController::class, 'updateStatusOrder'])->name('order.finish');
 });
 Route::post('/coupon/check',[CartController::class, 'applyCoupon'])->name('coupon.check');
 

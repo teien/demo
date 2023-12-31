@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -5,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 </head>
 
@@ -21,17 +22,19 @@
             <div class="row mt-5">
 
                 <ul class="list-group list-group-flush col-3">
-                <li class="list-group-item"> <h1 style="margin-top: 100px;">Tài khoản của tôi </h1> </l1>
-                    <li class="list-group-item"><a href="/profile" class="text-decoration-none fs-4 text-dark">Trang tài khoản</a></li>
+                    <li class="list-group-item">
+                        <h1 style="margin-top: 100px;">Tài khoản của tôi </h1>
+                    </li>
+                    <li class="list-group-item"><a href="/profile" class="text-decoration-none fs-4 text-dark" >Trang tài khoản</a></li>
                     <li class="list-group-item"><a href="/profile/order" class="text-decoration-none fs-4 text-dark">Đơn hàng</a></li>
 
                     <li class="list-group-item"><a href="/user/profile" class="text-decoration-none fs-4 text-dark">Tài khoản</a></li>
-                    <li class="list-group-item"><a class="text-decoration-none fs-4 text-dark">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" style="all: unset; cursor: pointer;"> Thoát</button>
-                            </form>
-                        </a></li>
+                    <li class="list-group-item">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="text" style="all: unset; cursor: pointer ; font-size: 24px;"> Thoát </button>
+                        </form>
+                    </li>
                 </ul>
 
                 <div class="col fs-5 mt-5">
@@ -39,13 +42,14 @@
                     <div class="border mb-3">
                         @foreach ($orderDetails as $item2)
                         @if ($orderId == $item2->order_id)
+                        <p class="d-none" >{{$item = $item2}}</p>
                         <div class="row mb-2 align-items-center text-center border-bottom update-input">
                             <div class="col-lg-5">
                                 <div class="me-lg-5">
                                     <div class="d-flex align-items-center text-center">
-                                        <img src="{{ asset($item2->products->img_link) }}" width="50" alt="Thumbnail" loading="lazy" />
+                                        <img src="{{ asset($item2->product->img_link) }}" width="50" alt="Thumbnail" loading="lazy" onclick="redirectToProductDetail('{{ $item2->product->id }}')"/>
                                         <div class="">
-                                            <a href="#" class="nav-link font-mono text-success">{{ $item2->products->name }}</a>
+                                            <a href="#" class="nav-link font-mono text-success" onclick="redirectToProductDetail('{{ $item2->product->id }}')">{{ $item2->product->name }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -65,27 +69,47 @@
                         @endif
                         @endforeach
                         <div class="row mb-3">
-                            <div class="col-md-6 text-start">
-                                <h5 id="totalPrice" class="d-inline">Total price: {{ number_format($item2->Orders->amount) }} đ</h5>
+                            <div class="col text-start">
+                                <h5 id="totalPrice" class="d-inline">Total price: {{ number_format($item->Orders->amount) }} đ</h5>
+                                <h5>Mã ĐH:{{ $item->Orders->id }} </h5>
                             </div>
-                            <div class="col-md-6 text-end">
-                                <time class="text-muted d-inline">Order date: {{ $item2->Orders->created_at }}</time>
+                            <div class="col">
+                                <h5 id="totalPrice" class="d-inline">
+                                    Tình trạng đơn hàng:
+                                    @if ($item->Orders->status == 1)
+                                        Đặt hàng thành công - Đang giao hàng
+                                    @elseif ($item->Orders->status == 0)
+                                        Đặt hàng thất bại
+                                    @elseif ($item->Orders->status == 3)
+                                        Đã giao hàng
+                                    @else
+                                        Trạng thái không xác định
+                                    @endif
+                                </h5>
+
+                                <form action="{{ route('order.finish', ['orderId' => $item->Orders->id]) }}" method="POST">
+                                    @csrf
+                                    @if ($item->Orders->status == 1)
+                                    <button type="submit" class="btn btn-success">Đã nhận được hàng</button>
+                                    @endif
+
+                                </form>
+                            </div>
+                            <div class="col text-end">
+                                <time class="text-muted d-inline">Order date: {{ $item->Orders->created_at }}</time>
                             </div>
                         </div>
                     </div>
                     @endforeach
                 </div>
-                <div id="Letter" class="Letter text-center mb-5">
-                    <h1>Đăng ký thành viên để nhận khuyến mại</h1>
-                    <p>Theo dõi chúng tôi để nhận thêm nhiều ưu đãi</p>
-                    <div class="d-flex justify-content-center">
-                        <input type="text" placeholder="nhập mail" />
-                        <a class="mail-btn">Đăng kí</a>
-                    </div>
-                </div>
             </div>
-
         </div>
         @include('includes.footer')
+    </div>
 </body>
-<!DOCTYPE html>
+<script>
+    function redirectToProductDetail(productId) {
+        window.location.href = '/product/' + productId;
+    }
+</script>
+</html>

@@ -19,5 +19,8 @@ class Products extends Model
         'created_at',
         'updated_at'
     ];
-
+    public function orderDetails()
+    {
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
+    }
 }
