@@ -9,13 +9,12 @@
                     <div class="m-4">
                         <h3 class="card-title mb-5 text-center">Giỏ Hàng</h3>
                         @foreach ($cartItems as $item)
-
                         <div class="row mb-5 align-items-center text-center border-bottom update-input">
                             <div class="col-lg-5">
-
                                 <div class="me-lg-5">
                                     <div class="d-flex align-items-center text-center">
                                         <input type="checkbox" name="checkbox-product">
+
                                         <img src="{{ asset($item->attributes->first()) }}" name="imgProduct" data-img="{{$item->attributes->first()}}" width="100" alt="Thumbnail" loading="lazy" />
                                         <div class="">
                                             <a href="#" class="nav-link font-mono text-success" name="name" data-name="{{ $item->name }}">{{ $item->name }}</a>
@@ -83,20 +82,20 @@
                             <p class="mb-2">Discount:</p>
                             <p class="mb-2 text-success">-$60.00</p>
                         </div>
-                      <!--   <div class="d-flex justify-content-between">
+                        <!--   <div class="d-flex justify-content-between">
                             <p class="mb-2">TAX:</p>
                             <p class="mb-2">$14.00</p>
                         </div> -->
-                       <hr />
+                        <hr />
                         <div class="d-flex justify-content-between">
                             <p class="mb-2">Total price:</p>
                             <p class="mb-2 fw-bold" id="finalPrice"> </p>
                         </div>
                         <div class="mt-3">
                             <a href="/checkout" class="btn btn-success w-100 shadow-0 mb-2" id="makePurchaseButton"> Make Purchase <?php
-session()->forget('selectedProducts');
-?>
-</a>
+                                                                                                                                    session()->forget('selectedProducts');
+                                                                                                                                    ?>
+                            </a>
                             <a href="#" class="btn btn-light w-100 border mt-2"> Back to shop </a>
                         </div>
                     </div>
