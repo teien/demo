@@ -27,10 +27,7 @@
                 <div class="row">
                     <div class="col-6 ">
                         <div class="d-flex ">
-                            <input type="checkbox" id="zoom_img">
-                            <label for="zoom_img">
-                                <img class="product-img border shadow-white" width="420px" height="420px" src="{{asset($product->img_link)}}" alt="">
-                            </label>
+                                <img class="product-img border shadow-white zoom_img " width="400px"  src="{{asset($product->img_link)}}" alt="" >
                         </div>
                     </div>
                     <div class="col-6">
@@ -247,6 +244,9 @@
                 console.error(error);
             }
         });
+    }
+    function redirectToProductDetail(productId) {
+        window.location.href = '/product/' + productId;
     }
 </script>
 

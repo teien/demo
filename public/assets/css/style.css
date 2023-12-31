@@ -655,15 +655,10 @@ body {
 .nav-item {
     text-decoration: none;
 }
-
-
-input[type=checkbox]:checked~label>img {
-    transform: scale(1.1);
-    cursor: zoom-out;
+.zoom_img:hover {
+    transform: scale(1.2);
+    /* Các thuộc tính khác nếu cần */
 }
-
-
-
 .screen-reader-text {
     border: 0;
     clip: rect(1px, 1px, 1px, 1px);
