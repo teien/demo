@@ -26,16 +26,21 @@ class AdminOrderController extends AdminController
     {
         $grid = new Grid(new Order());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('fullname', __('Fullname'));
-        $grid->column('address', __('Address'));
-        $grid->column('phone', __('Phone'));
-        $grid->column('email', __('Email'));
-        $grid->column('amount', __('Amount'));
-        $grid->column('status', __('Status'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('address', __('Address'))->sortable();
+        $grid->column('phone', __('Phone'))->sortable();
+        $grid->column('email', __('Email'))->sortable();
+        $grid->column('amount', __('Amount'))->sortable();
+        $grid->column('status', __('Status'))->sortable();
+        $grid->column('created_at', __('Created at'))->sortable();
+        $grid->column('updated_at', __('Updated at'))->sortable();
 
+        $grid->filter(function($filter){
+            $filter->like('id', 'Mã đơn hàng');
+            $filter->like('fullname', 'Tên khách hàng');
+            $filter->like('phone', 'Số điện thoại');
+        });
         return $grid;
     }
 

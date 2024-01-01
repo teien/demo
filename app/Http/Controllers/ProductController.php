@@ -28,7 +28,8 @@ class ProductController extends Controller
         $genderFilter = $request->input('filter_gioi-tinh');
         $priceFilter = $request->input('filter_khoang-gia');
 
-        $products = DB::table('products')->select('*');
+        $product = Products::where('is_visible', true)->where('quantity', '>', 0)->get();
+
         $priceRange = null;
         if ($genderFilter) {
             $products->where('sex','=', $genderFilter);

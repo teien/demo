@@ -23,4 +23,13 @@ class Products extends Model
     {
         return $this->hasMany(OrderDetails::class);
     }
+    protected static function booted()
+{
+    static::saved(function ($product) {
+        if ($product->quantity <= 0) {
+            $product->is_visible = false;
+            $product->save();
+        }
+    });
+}
 }

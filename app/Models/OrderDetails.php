@@ -15,8 +15,11 @@ class OrderDetails extends Model
     {
         static::updating(function ($orderDetails) {
 
-            if ($orderDetails->isDirty('product_id')) {
+            if ($orderDetails->isDirty('product_id') || $orderDetails->isDirty('quantity')) {
                 $orderDetails->updatePriceFromProduct();
+            }
+            if ($orderDetails->isDirty('quantity') || $orderDetails->isDirty('product_id')) {
+                $orderDetails->updateQuantityProduct();
             }
             $orderDetails->updateOrderTotalOnUpdate();
         });
@@ -27,6 +30,7 @@ class OrderDetails extends Model
 
         static::deleting(function ($orderDetails) {
             $orderDetails->updateOrderTotalOnDelete();
+            $orderDetails->updateQuantityProductOnDelete();
         });
 
         static::deleted(function ($orderDetails) {
@@ -34,6 +38,18 @@ class OrderDetails extends Model
         });
     }
 
+        public function updateQuantityProductOnDelete()
+        {
+            $product = $this->product;
+
+            if ($product) {
+                // Lấy giá trị cũ của quantity từ OrderDetails
+                $oldQuantity = $this->getOriginal('quantity');
+                // Cập nhật quantity cho product
+                $product->quantity += $oldQuantity;
+                $product->save();
+            }
+        }
     public function updateOrderTotalOnUpdate()
     {
         $this->updateOrderTotal();
@@ -41,7 +57,7 @@ class OrderDetails extends Model
 
     public function updateOrderTotalOnDelete()
     {
-        $this->quantity = 0; // Set quantity to 0 when deleting
+        $this->quantity = 0;
         $this->updateOrderTotal();
     }
     public function updatePriceFromProduct()
@@ -63,7 +79,23 @@ class OrderDetails extends Model
             $order->save();
         }
     }
+    public function updateQuantityProduct()
+    {
+        $product = $this->product;
 
+        if ($product) {
+            // Lấy giá trị mới của quantity từ OrderDetails
+            $newQuantity = $this->quantity;
+
+            // Lấy giá trị cũ của quantity từ OrderDetails
+            $oldQuantity = $this->getOriginal('quantity');
+            // Tính toán sự thay đổi của quantity
+            $quantityChange = $newQuantity - $oldQuantity;
+            // Cập nhật quantity cho product
+            $product->quantity -= $quantityChange;
+            $product->save();
+        }
+    }
     public function order()
     {
         return $this->belongsTo(Order::class);

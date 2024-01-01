@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use Illuminate\Support\Facades\DB;
+
 class HomeController extends Controller
 {
     /**
@@ -12,9 +13,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $product =Db::table('products')->select('*');
-        $product = $product->get();
-        return view('home',compact('product'));
+        $product = Products::where('is_visible', true)->where('quantity', '>', 0)->get();
+
+        return view('home', compact('product'));
     }
 
     /**
@@ -38,7 +39,7 @@ class HomeController extends Controller
      */
     public function show(string $id)
     {
-       //
+        //
     }
 
     /**

@@ -26,15 +26,21 @@ class AdminOrderDetailsController extends AdminController
     {
         $grid = new Grid(new OrderDetails());
 
-        $grid->column('id', __('Id'));
-        $grid->column('order_id', __('Order id'));
-        $grid->column('product_id', __('Product id'));
-        $grid->column('price', __('Price'));
-        $grid->column('quantity', __('Quantity'));
-        $grid->column('fullname', __('Fullname'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('order_id', __('Order id'))->sortable();
+        $grid->column('product_id', __('Product id'))->sortable();
+        $grid->column('price', __('Price'))->sortable();
+        $grid->column('quantity', __('Quantity'))->sortable();
+        $grid->column('product.quantity', __('Product Quantity'))->sortable();
+        $grid->column('fullname', __('Fullname'))->sortable();
+        $grid->column('created_at', __('Created at'))->sortable();
+        $grid->column('updated_at', __('Updated at'))->sortable();
 
+        $grid->filter(function($filter){
+            $filter->like('order_id', 'Mã đơn hàng');
+            $filter->like('fullname', 'Tên khách hàng');
+            $filter->like('product_id', 'Mã hàng');
+        });
         return $grid;
     }
 
@@ -56,6 +62,7 @@ class AdminOrderDetailsController extends AdminController
         $show->field('fullname', __('Fullname'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
+
 
         return $show;
     }

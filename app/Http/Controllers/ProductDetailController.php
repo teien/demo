@@ -11,7 +11,7 @@ class ProductDetailController extends Controller
     {
         $product = Products::where('id', '=', $id)->select('*')->first();
         $catalog_id = $product->catalog_id;
-        $sameProducts = Products::where('catalog_id', $catalog_id )->get();
+        $sameProducts = Products::where('catalog_id', $catalog_id )->where('is_visible', true)->get();
         $comments = Comments::where('product_id',$product->id)->orderBy('id' , 'DESC')->get();
         return view('product_detail' , compact('product','comments','sameProducts'));
     }

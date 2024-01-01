@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Str;
 
 class AdminProductsController extends AdminController
 {
@@ -25,24 +26,30 @@ class AdminProductsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Products());
-        $grid->column('id', __('ID'));
-        $grid->column('catalog_id', __('catalog_id'))->editable();
-        $grid->column('name', __('Name'))->editable();
-        $grid->column('price', __('Price'))->editable();
-        $grid->column('amount', __('Amount'))->editable();
-        $grid->column('img_link')->display(function ($img_link) {
+        $grid->column('id', __('ID'))->sortable();
+        $grid->column('catalog_id', __('Loại sản phẩm'))->sortable();
+        $grid->column('name', __('Tên sản phẩm'))->sortable();
+        $grid->column('price', __('Giá'))->sortable();
+        $grid->column('quantity', __('Tồn kho'))->sortable();
+        $grid->column('img_link',__('Ảnh minh họa'))->display(function ($img_link) {
             $fullUrl = asset("assets/{$img_link}");
             return "<img src='{$fullUrl}' style='width: 80px;' />";
         });
         //$grid->column('img_link', __('Image link'));
-        $grid->column('content', __('Content'))->editable();
+        $grid->column('content', __('Giới thiệu'))->display(function ($content) {
+            // ...
+
+            return Str::limit($content, 200, '...');
+        })->width(900);
+        $grid->column('is_visible', __('Visible'))->switch();
+
         $grid->filter(function ($filter) {
             // Xóa ID filter mặc định
            // $filter->disableIdFilter();
 
             // Thêm 1 filter theo cột dữ liệu
             $filter->like('name', 'Name');
-            $filter->like('CATALOG_ID', 'Catalog ID');
+            $filter->like('catalog_id', 'Loại sản phẩm');
         });
 
         return $grid;
@@ -59,13 +66,13 @@ class AdminProductsController extends AdminController
         $show = new Show(Products::findOrFail($id));
 
         $show->field('id', __('ID'));
-        $show->field('CATALOG_ID', __('CATALOG ID'));
-        $show->field('name', __('Name'));
-        $show->field('price', __('Price'));
-        $show->field('amount', __('Amount'));
-        $show->field('img_link', __('Image link'));
+        $show->field('catalog_id', __('Loại sản phẩm'));
+        $show->field('name', __('Tên sản phẩm'));
+        $show->field('price', __('Giá'));
+        $show->field('amount', __('Tồn kho'));
+        $show->field('img_link', __('Ảnh minh họa'));
         //$show->image('img_link', __('Image link'))->basePath('public/assets/img');
-        $show->field('content', __('Content'));
+        $show->field('content', __('Giới thiệu sp'));
 
         return $show;
     }
@@ -78,12 +85,13 @@ class AdminProductsController extends AdminController
     protected function form()
     {
         $form = new Form(new Products());
-        $form->number('CATALOG_ID', __('CATALOG ID'));
+        $form->number('catalog_id', __('Loại sản phẩm'));
         $form->text('name', __('Name'));
         $form->decimal('price', __('Price'));
         $form->number('amount', __('Amount'));
         $form->text('img_link', __('Img link'));
         $form->textarea('content', __('Content'));
+        $form->switch('is_visible', __('Visible'));
         return $form;
     }
 }
