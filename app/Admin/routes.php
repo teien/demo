@@ -9,6 +9,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminContactsController;
+use App\Admin\Controllers\AdminCatalogsController;
 
 
 Admin::routes();
@@ -26,5 +27,7 @@ Route::group([
     $router->resource('/order', AdminOrderController::class);
     $router->resource('/order-details', AdminOrderDetailsController::class);
     $router->resource('/contacts', AdminContactsController::class);
+    $router->resource('/catalogs', AdminCatalogsController::class);
+
 
 });

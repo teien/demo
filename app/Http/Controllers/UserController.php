@@ -30,49 +30,10 @@ class UserController extends Controller
     {
         $email = Auth::user()->email;
         $order_id = Order::where('email', $email)
-    ->orderBy('created_at', 'desc') // Sắp xếp theo thời gian giảm dần (newest first)
-    ->pluck('id');
+            ->orderBy('created_at', 'desc') // Sắp xếp theo thời gian giảm dần (newest first)
+            ->pluck('id');
         $orderDetails = OrderDetails::whereIn('order_id', $order_id)->get();
-        return view('profile.user_orders', compact('orderDetails','order_id'));
+        return view('profile.user_orders', compact('orderDetails', 'order_id'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

@@ -61,6 +61,9 @@ return [
             'root' => storage_path('app/public/admin'),
         ],
 
+        'links' => [
+
+        ],
     ],
 
     /*

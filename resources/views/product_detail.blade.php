@@ -141,6 +141,8 @@
 
             @endif
 
+
+
             @foreach($comments as $comm)
             <div class="container py-4">
                 <div class="row">
@@ -153,7 +155,7 @@
                                 <div class="comment">
                                     <img src="https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" alt="Avatar" class="avatar">
                                     <div class="comment-details">
-                                        <h5 class="username">{{$comm->user->name}}</h5>
+                                        <h5 class="username">{{ $comm->user->name ?? 'Ẩn danh' }}</h5>
                                         <p class="text">{{$comm->comments}}</p>
 
                                         <p class="date-cmt">{{$comm->created_at->format('d/m/Y')}}</p>
@@ -202,42 +204,44 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var button = document.querySelector('.formClick');
-        console.log(button)
-        button.addEventListener('submit', function(event) {
-            event.preventDefault();
-            console.log('Submit button clicked')
-            var productId = button.querySelector('[name="id"]').value;
-            var productName = button.querySelector('[name="name"]').value;
-            var productPrice = button.querySelector('[name="price"]').value;
-            var productQuantity = button.querySelector('[name="quantity"]').value;
-            var productImgLink = button.querySelector('[name="img_link"]').value;
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('cart.store') }}",
-                data: {
-                    id: productId,
-                    name: productName,
-                    price: productPrice,
-                    quantity: productQuantity,
-                    img_link: productImgLink,
-                    _token: '{{ csrf_token() }}',
-                },
-                success: function showNotification() {
-                    var notification = $('#notification');
-                    notification.addClass('show');
 
-                    // Hide the notification after 3 seconds (adjust as needed)
-                    setTimeout(function() {
-                        notification.removeClass('show');
-                    }, 5000);
-                    updateCartInHeader();
-                },
-                error: function(error) {
-                    console.error(error);
-                }
+        if (button) {
+            button.addEventListener('submit', function(event) {
+                event.preventDefault();
+                console.log('Submit button clicked')
+                var productId = button.querySelector('[name="id"]').value;
+                var productName = button.querySelector('[name="name"]').value;
+                var productPrice = button.querySelector('[name="price"]').value;
+                var productQuantity = button.querySelector('[name="quantity"]').value;
+                var productImgLink = button.querySelector('[name="img_link"]').value;
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('cart.store') }}",
+                    data: {
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        quantity: productQuantity,
+                        img_link: productImgLink,
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function showNotification() {
+                        var notification = $('#notification');
+                        notification.addClass('show');
+
+                        // Hide the notification after 3 seconds (adjust as needed)
+                        setTimeout(function() {
+                            notification.removeClass('show');
+                        }, 5000);
+                        updateCartInHeader();
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+
             });
-
-        });
+        }
     });
 
     function updateCartInHeader() {

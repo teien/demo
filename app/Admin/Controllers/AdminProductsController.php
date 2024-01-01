@@ -86,11 +86,11 @@ class AdminProductsController extends AdminController
     {
         $form = new Form(new Products());
         $form->number('catalog_id', __('Loại sản phẩm'));
-        $form->text('name', __('Name'));
-        $form->decimal('price', __('Price'));
-        $form->number('amount', __('Amount'));
+        $form->text('name', __('Tên sản phẩm'));
+        $form->decimal('price', __('Giá'));
+        $form->number('quantity', __('Tồn kho'));
         $form->text('img_link', __('Img link'));
-        $form->textarea('content', __('Content'));
+        $form->textarea('content', __('Giới thiệu'));
         $form->switch('is_visible', __('Visible'));
         return $form;
     }
