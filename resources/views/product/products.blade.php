@@ -35,10 +35,9 @@
             </p>
         </div>
 
-        <div class="d-flex">
+        <div class="d-flex ms-lg-5 ms-sm-1">
             <div class="col-2">
                 <div class="sidebar">
-
                     <div class="ms-lg-3 ms-sm-1">
                         <h3>
                             Thương hiệu

@@ -89,7 +89,8 @@ class AdminProductsController extends AdminController
         $form->text('name', __('Tên sản phẩm'));
         $form->decimal('price', __('Giá'));
         $form->number('quantity', __('Tồn kho'));
-        $form->text('img_link', __('Img link'));
+
+        $form->image('img_link', 'Label');
         $form->textarea('content', __('Giới thiệu'));
         $form->switch('is_visible', __('Visible'));
         return $form;

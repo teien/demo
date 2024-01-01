@@ -18,7 +18,7 @@
                     <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('product') ? 'active' : '' }}" href="/product">Sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('Blog') ? 'active' : '' }}" href="/blog">Blog</a>
+                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('blog') ? 'active' : '' }}" href="/blog">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('contact') ? 'active' : '' }}" href="/contact">Liên hệ</a>

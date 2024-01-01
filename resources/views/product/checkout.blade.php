@@ -12,297 +12,9 @@
     <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-
-    <style type="text/css">
-        body {
-            margin-top: 20px;
-            background-color: #f1f3f7;
-        }
-
-        .card {
-            margin-bottom: 24px;
-            -webkit-box-shadow: 0 2px 3px #e4e8f0;
-            box-shadow: 0 2px 3px #e4e8f0;
-        }
-
-        .card-body {
-            -webkit-box-flex: 1;
-            -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-            padding: 1.5rem 1.5rem;
-        }
-
-        .card {
-            position: relative;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid #eff0f2;
-            border-radius: 1rem;
-        }
-
-        .activity-checkout {
-            list-style: none;
-        }
-
-        .activity-checkout .checkout-icon {
-            position: absolute;
-            top: -4px;
-            left: -24px;
-        }
-
-        .activity-checkout .checkout-item {
-            position: relative;
-            padding-bottom: 24px;
-            padding-left: 35px;
-            border-left: 2px solid #f5f6f8;
-        }
-
-        .activity-checkout .checkout-item:first-child {
-            border-color: #3b76e1;
-        }
-
-        .activity-checkout .checkout-item:first-child:after {
-            background-color: #3b76e1;
-        }
-
-        .activity-checkout .checkout-item:last-child {
-            border-color: transparent;
-        }
-
-        .activity-checkout .checkout-item.crypto-activity {
-            margin-left: 50px;
-        }
-
-        .activity-checkout .checkout-item .crypto-date {
-            position: absolute;
-            top: 3px;
-            left: -65px;
-        }
-
-        .avatar-xs {
-            height: 1rem;
-            width: 1rem;
-        }
-
-        .avatar-sm {
-            height: 2rem;
-            width: 2rem;
-        }
-
-        .avatar {
-            height: 3rem;
-            width: 3rem;
-        }
-
-        .avatar-md {
-            height: 4rem;
-            width: 4rem;
-        }
-
-        .avatar-lg {
-            height: 5rem;
-            width: 5rem;
-        }
-
-        .avatar-xl {
-            height: 6rem;
-            width: 6rem;
-        }
-
-        .avatar-title {
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            background-color: #3b76e1;
-            color: #fff;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            font-weight: 500;
-            height: 100%;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .avatar-group {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            padding-left: 8px;
-        }
-
-        .avatar-group .avatar-group-item {
-            margin-left: -8px;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            -webkit-transition: all 0.2s;
-            transition: all 0.2s;
-        }
-
-        .avatar-group .avatar-group-item:hover {
-            position: relative;
-            -webkit-transform: translateY(-2px);
-            transform: translateY(-2px);
-        }
-
-        .card-radio {
-            background-color: #fff;
-            border: 2px solid #eff0f2;
-            border-radius: 0.75rem;
-            padding: 0.5rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            display: block;
-        }
-
-        .card-radio:hover {
-            cursor: pointer;
-        }
-
-        .card-radio-label {
-            display: block;
-        }
-
-        .edit-btn {
-            width: 35px;
-            height: 35px;
-            line-height: 40px;
-            text-align: center;
-            position: absolute;
-            right: 25px;
-            margin-top: -50px;
-        }
-
-        .card-radio-input {
-            display: none;
-        }
-
-        .card-radio-input:checked+.card-radio {
-            border-color: #3b76e1 !important;
-        }
-
-        .font-size-16 {
-            font-size: 16px !important;
-        }
-
-        .text-truncate {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        a {
-            text-decoration: none !important;
-        }
-
-        .form-control {
-            display: block;
-            width: 100%;
-            padding: 0.47rem 0.75rem;
-            font-size: 0.875rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #545965;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #e2e5e8;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            border-radius: 0.75rem;
-            -webkit-transition: border-color 0.15s ease-in-out,
-                -webkit-box-shadow 0.15s ease-in-out;
-            transition: border-color 0.15s ease-in-out,
-                -webkit-box-shadow 0.15s ease-in-out;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-                -webkit-box-shadow 0.15s ease-in-out;
-        }
-
-        .edit-btn {
-            width: 35px;
-            height: 35px;
-            line-height: 40px;
-            text-align: center;
-            position: absolute;
-            right: 25px;
-            margin-top: -50px;
-        }
-
-        .ribbon {
-            position: absolute;
-            right: -26px;
-            top: 20px;
-            -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-            color: #fff;
-            font-size: 13px;
-            font-weight: 500;
-            padding: 1px 22px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-
+    <link href="{{ asset('assets/css/checkout.css') }}" rel="stylesheet">
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand ms-5" href="#">
-                <img width="100px" src="https://xxivstore.com/wp-content/uploads/2023/10/XXIV-Logo-2.svg" alt="" />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item ">
-                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('home') ? 'active' : '' }}" href="/home">Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('about') ? 'active' : '' }}" href="/about">Giới thiệu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/products">Sản phẩm</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('') ? 'active' : '' }}" href="/contact">Liên hệ</a>
-                    </li>
-                </ul>
-
-                <div class="icon-header d-flex align-items-center ms-auto gap-5 me-5">
-                    <i class="fa-solid fa-truck-fast fa-bounce fa-lg" style="color: #000;"></i>
-                    <a href="login" class="text-decoration-none">
-                        <i class="far fa-user ms-2"></i>
-                    </a>
-
-                    <a href="{{ route('cart.list') }}" class="flex items-center position-relative text-decoration-none">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cartContainer" class="badge rounded-circle bg-danger position-absolute top-0 start-100 translate-middle ">{{ Cart::getTotalQuantity()}}</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
+    @include('includes.header')
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col">
@@ -311,11 +23,7 @@
                         <div class="card border shadow-0">
                             <div class="m-4">
                                 <h4 class="card-title mb-5 text-center">Giỏ hàng của bạn</h4>
-
-
-
                                 @foreach ($selectedProducts as $item)
-
                                 <div class="row mb-5 align-items-center text-center border-bottom update-input">
                                     <div class="col-lg-5">
                                         <div class="me-lg-5">
@@ -329,13 +37,10 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-
                                         <div class="flex flex-row me-5">
                                             <span class="m-4 me-5">{{ $item['quantity'] }}</span>
                                             <text class=" text-nowrap item-price ms-5"> {{ number_format($item['price'],0,',', '.') }}đ / 1 sản phẩm </text>
                                         </div>
-
-
                                     </div>
                                     <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
                                         <div class="float-md-end">
@@ -343,24 +48,16 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 @endforeach
                                 <h3 id="totalPrice" data-price="{{ $item['totalPrice'] }}">Tổng thanh toán: {{number_format($item['totalPrice'],0,',', '.')}} đ </h3>
-
                             </div>
                         </div>
                     </div>
+                    <h2 class=" text-center mt-4 mb-4">Thông tin liên hệ</h2>
                     <ol class="activity-checkout mb-0 px-4 mt-3">
-                        <li class="checkout-item">
-                            <div class="avatar checkout-icon p-1">
-                                <div class="avatar-title rounded-circle bg-primary">
-                                    <i class="bx bxs-receipt text-white font-size-20"></i>
-                                </div>
-                            </div>
+                        <li class=" ">
                             <div class="feed-item-list">
                                 <div>
-                                    <h5 class="font-size-16 mb-1">Thông tin liên hệ</h5>
                                     <div class="mb-3">
                                         <form class="order-input" action="/checkout/success/">
                                             <div>
@@ -423,6 +120,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </li>
+                    </ol>
                 </div>
                 </li>
 

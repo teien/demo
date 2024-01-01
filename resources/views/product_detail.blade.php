@@ -157,7 +157,6 @@
                                     <div class="comment-details">
                                         <h5 class="username">{{ $comm->user->name ?? 'Ẩn danh' }}</h5>
                                         <p class="text">{{$comm->comments}}</p>
-
                                         <p class="date-cmt">{{$comm->created_at->format('d/m/Y')}}</p>
                                         @can('my-comment' , $comm)
                                         <p class="text-right">

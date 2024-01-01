@@ -198,7 +198,12 @@ return [
         'role_permissions_table' => 'admin_role_permissions',
         'role_menu_table'        => 'admin_role_menu',
     ],
+    'extensions' => [
 
+        'media-manager' => [
+            'disk' => 'public'   // Points to the disk set in config/filesystem.php
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | User operation log setting

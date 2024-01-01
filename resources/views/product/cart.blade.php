@@ -27,7 +27,7 @@
                                         <form class="update-form " action="{{ route('cart.update') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $item->id }}">
-                                            <input type="number" name="quantity" style="width: 50px;" data-price="{{ $item->price }}" value="{{ $item->quantity }}" class="text-center border quantityInput " />
+                                            <input type="number" name="quantity" style="width: 50px;" data-price="{{ $item->price }}" value="{{ $item->quantity }}" class="text-center border quantityInput" min="1" max="9" />
                                         </form>
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@
                             <label class="form-label" for="coupon">Bạn có mã giảm giá?</label>
                             <div class="input-group">
                                 <input type="text" class="form-control border" name="coupon" id="coupon" value="{{ old('username') }}" placeholder="Coupon code" />
-                                <button type="submit" class="btn btn-light border">Apply</button> </br>
+                                <button type="submit" class="btn btn-light border">Áp dụng</button> </br>
                                 @if(session('success'))
                                 <div class="alert alert-success">
                                     {{ session('success') }}
@@ -158,9 +158,10 @@
         });
         makePurchaseButton.addEventListener('click', function(event) {
             var selectedProducts = getSelectedProducts();
-            console.log(selectedProducts)
+
             if (selectedProducts.length === 0) {
-                alert('Please check at least one checkbox before making a purchase.');
+                alert('Vui lòng chọn sản phẩm để mua hàng');
+
             } else {
 
                 $.ajax({
@@ -178,8 +179,6 @@
                         console.log(error);
                     }
                 });
-
-
             }
 
         });

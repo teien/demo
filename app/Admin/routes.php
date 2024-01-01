@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminContactsController;
 use App\Admin\Controllers\AdminCatalogsController;
+use App\Admin\Controllers\AdminCouponsController;
 
 
 Admin::routes();
@@ -28,6 +29,7 @@ Route::group([
     $router->resource('/order-details', AdminOrderDetailsController::class);
     $router->resource('/contacts', AdminContactsController::class);
     $router->resource('/catalogs', AdminCatalogsController::class);
+    $router->resource('/coupons', AdminCouponsController::class);
 
 
 });
