@@ -10,9 +10,6 @@ class ContactController extends Controller
         return view('contact');
     }
 
-   
-
-   
     public function store(Request $request)
     {
         $news = new Contacts ;
@@ -20,7 +17,7 @@ class ContactController extends Controller
         $news->phone = $request->phone;
         $news->email = $request->email;
         $news->message = $request->message;
-        
+
         $news->save();
         return redirect()->action([ContactController::class,'index'])
     ;

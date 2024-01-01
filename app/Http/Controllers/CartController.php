@@ -6,6 +6,7 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+
 class CartController extends Controller
 {
     /**
@@ -24,11 +25,10 @@ class CartController extends Controller
         ]);
         $couponCode = $request->input('coupon');
         $checkCoupon = DB::table('coupons')->where('coupon_code', $couponCode)->first();
-        if($checkCoupon == null){
+        if ($checkCoupon == null) {
             session()->flash('error', 'Coupon is not Valid !');
             return redirect()->route('cart.list');
-        }
-        else {
+        } else {
             $checkCoupon->expiration_date = Carbon::parse($checkCoupon->expiration_date)->format('Y-m-d');
             $currentDate = Carbon::now()->format('Y-m-d');
 
@@ -38,7 +38,6 @@ class CartController extends Controller
                 return redirect()->back()->with('error', 'Coupon hết hạn.');
             }
         }
-
     }
 
 

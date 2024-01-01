@@ -21,7 +21,7 @@ class GgController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createGg()
     {
         $ggUser = Socialite::driver('google')->user();
         $user = User::where('email', $ggUser->email)->first();
