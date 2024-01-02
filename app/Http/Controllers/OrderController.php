@@ -9,6 +9,8 @@ use App\Models\Products;
 use App\Models\OrderDetails;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 
+use function Laravel\Prompts\alert;
+
 class OrderController extends Controller
 {
     public function updateStatusOrder($orderId)
@@ -54,7 +56,7 @@ class OrderController extends Controller
     {
         $validatedData = $request->validate([
             'fullname' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|numeric|digits:10',
             'address' => 'required',
             'amount' => 'required',
             'email' => 'required|email',
@@ -67,28 +69,28 @@ class OrderController extends Controller
             'address' => $validatedData['address'],
             'amount' => $validatedData['amount'],
             'email' => $validatedData['email'],
+            'user_id' => auth()->user()->id,
             'status' => '0',
         ]);
-        $order->save();
+
         $order_id = $order->id;
         session(['current_order_id' => $order_id]);
         $selectedProducts = session('selectedProducts', []);
         foreach ($selectedProducts as $product) {
 
-                $existingProduct = Products::find($product['id']);
-                if ($existingProduct) {
-                    OrderDetails::create([
-                        'product_id' => $product['id'],
-                        'order_id' => $order_id,
-                        'price' => $product['price'],
-                        'quantity' => $product['quantity'],
-                        'fullname' => $validatedData['fullname'] ?? '',
-                    ]);
-                    Cart::remove($product['id']);
-                    $this->updateStock($product['id'], $product['quantity']);
-                }
+            $existingProduct = Products::find($product['id']);
+            if ($existingProduct) {
+                OrderDetails::create([
+                    'product_id' => $product['id'],
+                    'order_id' => $order_id,
+                    'price' => $product['price'],
+                    'quantity' => $product['quantity'],
+                    'fullname' => $validatedData['fullname'] ?? '',
+                ]);
+                Cart::remove($product['id']);
+                $this->updateStock($product['id'], $product['quantity']);
             }
-
+        }
     }
     protected function updateStock($productId, $quantity)
     {
@@ -107,11 +109,18 @@ class OrderController extends Controller
     public function checkoutSuccess()
     {
         $order = Order::find(session('current_order_id'));
-        if ($order->status == 0) {
-            return view('alert.errorOrder');
+
+        if ($order) {
+            if ($order->status == 0) {
+                return view('alert.errorOrder');
+            } elseif ($order->status == null) {
+                return view('alert.errorOrder', ['message' => 'Đơn hàng không tồn tại']);
+            } else {
+                $orderDetails = OrderDetails::where('order_id', session('current_order_id'))->get();
+                return view('alert.sucessOrder', compact('order', 'orderDetails'));
+            }
         } else {
-            $orderDetails = OrderDetails::where('order_id', session('current_order_id'))->get();
-            return view('alert.sucessOrder', compact('order', 'orderDetails'));
+            return view('alert.errorOrder', ['message' => 'Đơn hàng không tồn tại']);
         }
     }
 }

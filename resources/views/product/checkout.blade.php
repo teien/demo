@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/checkout.css') }}" rel="stylesheet">
+
 <body>
     @include('includes.header')
     <div class="container mt-5 mb-5">
@@ -117,6 +118,7 @@
                                                     </div>
                                                 </div> -->
                                             </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -238,6 +240,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var orderCusAddress;
+
         var orderCusPhone;
         var orderCusName = document.getElementById('billing-name').value;
         var orderCusMail = document.getElementById('billing-email-address').value;
@@ -247,7 +250,6 @@
         document.getElementById('billing-phone').addEventListener("input", function(event) {
             orderCusPhone = event.target.value;
         });
-
         var orderCusTotalPrice = document.getElementById('totalPrice').dataset.price;
         proceedButton.addEventListener('click', function(event) {
             $.ajax({

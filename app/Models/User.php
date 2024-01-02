@@ -24,6 +24,8 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+
     protected $table = 'users';
     protected $fillable = [
         'name',
@@ -51,6 +53,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'email', 'email');
+    }
     /**
      * The accessors to append to the model's array form.
      *
@@ -59,5 +65,6 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
 
 }

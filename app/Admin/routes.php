@@ -11,7 +11,7 @@ use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminContactsController;
 use App\Admin\Controllers\AdminCatalogsController;
 use App\Admin\Controllers\AdminCouponsController;
-
+use App\Admin\Controllers\HomeController;
 
 Admin::routes();
 
@@ -30,6 +30,7 @@ Route::group([
     $router->resource('/contacts', AdminContactsController::class);
     $router->resource('/catalogs', AdminCatalogsController::class);
     $router->resource('/coupons', AdminCouponsController::class);
+
 
 
 });

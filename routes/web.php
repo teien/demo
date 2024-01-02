@@ -53,12 +53,14 @@ Route::get('/cart/total-quantity', [CartController::class, 'getTotalQuantity'])-
 Route::middleware('auth')->group(function () {
     Route::get('/checkout', [OrderController::class, 'checkoutList'])->name('checkout.list');
     Route::post('/checkout-add', [OrderController::class, 'checkout'])->name('checkout');
-    Route::post('/checkout', [OrderController::class, 'storeCheckout'])->name('checkout.store');
-    Route::get('/checkout/success/', [OrderController::class, 'checkoutSuccess'])->name('checkout.success');
+
     Route::get('/profile/order',[UserController::class, 'ordersList'])->name('user.order');
     Route::post('/order/finish/{orderId}',[OrderController::class, 'updateStatusOrder'])->name('order.finish');
     Route::get('/profile', [UserController::class, 'index']);
 });
+Route::post('/checkout', [OrderController::class, 'storeCheckout'])->name('checkout.store');
+Route::get('/checkout/success/', [OrderController::class, 'checkoutSuccess'])->name('checkout.success');
+
 Route::post('/coupon/check',[CartController::class, 'applyCoupon'])->name('coupon.check');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index']);
 Route::post('/contact', [ContactController::class, 'store']);

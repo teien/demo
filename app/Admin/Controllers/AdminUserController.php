@@ -30,6 +30,11 @@ class AdminUserController extends AdminController
             $filter->like('Email', 'Email');
            // $filter->like('Phone', 'Phone');
         });
+        $grid->column('total_amount', __('Total Amount'))->display(function () {
+            $totalAmount = $this->orders()->sum('amount');
+            return number_format($totalAmount, 0, ',', '.');
+        });
+
         return $grid;
     }
 

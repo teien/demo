@@ -29,7 +29,9 @@ class AdminProductsController extends AdminController
         $grid->column('id', __('ID'))->sortable();
         $grid->column('catalog_id', __('Loại sản phẩm'))->sortable();
         $grid->column('name', __('Tên sản phẩm'))->sortable();
-        $grid->column('price', __('Giá'))->sortable();
+        $grid->column('price', __('Giá'))->sortable()->display(function ($price) {
+            return number_format($price, 0, ',', '.');
+        });
         $grid->column('quantity', __('Tồn kho'))->sortable();
         $grid->column('img_link',__('Ảnh minh họa'))->display(function ($img_link) {
             $fullUrl = asset("assets/{$img_link}");

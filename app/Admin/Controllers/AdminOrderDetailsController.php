@@ -29,7 +29,10 @@ class AdminOrderDetailsController extends AdminController
         $grid->column('id', __('Id'))->sortable();
         $grid->column('order_id', __('Order id'))->sortable();
         $grid->column('product_id', __('Product id'))->sortable();
-        $grid->column('price', __('Price'))->sortable();
+        $grid->column('price', __('Price'))->sortable()->display(function ($price) {
+            return number_format($price, 0, ',', '.');
+        });
+
         $grid->column('quantity', __('Quantity'))->sortable();
         $grid->column('product.quantity', __('Product Quantity'))->sortable();
         $grid->column('fullname', __('Fullname'))->sortable();
@@ -76,7 +79,7 @@ class AdminOrderDetailsController extends AdminController
     {
         $form = new Form(new OrderDetails());
 
-        $form->number('order_id', __('Order id'));
+        $form->text('order_id', __('Order id'));
         $form->number('product_id', __('Product id'));
         $form->decimal('price', __('Price'));
         $form->number('quantity', __('Quantity'));

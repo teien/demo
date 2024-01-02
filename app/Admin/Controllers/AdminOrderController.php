@@ -7,7 +7,9 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Auth\Permission;
 
+use Encore\Admin\Facades\Admin;
 class AdminOrderController extends AdminController
 {
     /**
@@ -16,6 +18,10 @@ class AdminOrderController extends AdminController
      * @var string
      */
     protected $title = 'Order';
+
+
+
+
 
     /**
      * Make a grid builder.
@@ -26,13 +32,31 @@ class AdminOrderController extends AdminController
     {
         $grid = new Grid(new Order());
 
+
+
+
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('fullname', __('Fullname'));
-        $grid->column('address', __('Address'))->sortable();
-        $grid->column('phone', __('Phone'))->sortable();
+        $grid->column('user_id', __('Id Khách hàng'));
+        $grid->column('fullname', __('Tên khách hàng'));
+        $grid->column('address', __('Địa chỉ'))->sortable();
+        $grid->column('phone', __('SĐT'))->sortable();
         $grid->column('email', __('Email'))->sortable();
-        $grid->column('amount', __('Amount'))->sortable();
-        $grid->column('status', __('Status'))->sortable();
+        $grid->column('amount', __('Tổng tiền'))->sortable()->display(function ($price) {
+            return number_format($price, 0, ',', '.');
+        });
+        $grid->column('status', __('Status'))->display(function ($status) {
+            switch ($status) {
+                case 0:
+                    return '<span class="label label-danger">Thất bại</span>';
+                case 1:
+                    return '<span class="label label-warning">Đang giao</span>';
+                case 2:
+                    return '<span class="label label-success">Đã giao</span>';
+                default:
+                    return '';
+            }
+        })->sortable();
+
         $grid->column('created_at', __('Created at'))->sortable();
         $grid->column('updated_at', __('Updated at'))->sortable();
 
@@ -55,6 +79,7 @@ class AdminOrderController extends AdminController
         $show = new Show(Order::findOrFail($id));
 
         $show->field('id', __('Id'));
+        $show->field('user_id', __('Id Khách hàng'));
         $show->field('fullname', __('Fullname'));
         $show->field('address', __('Address'));
         $show->field('phone', __('Phone'));
@@ -75,7 +100,7 @@ class AdminOrderController extends AdminController
     protected function form()
     {
         $form = new Form(new Order());
-
+        $form->text('user_id', __('Id Khách hàng'))->readonly();
         $form->text('fullname', __('Fullname'));
         $form->text('address', __('Address'));
         $form->mobile('phone', __('Phone'));
@@ -85,4 +110,6 @@ class AdminOrderController extends AdminController
 
         return $form;
     }
+
+
 }
