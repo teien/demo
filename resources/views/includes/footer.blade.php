@@ -3,7 +3,7 @@
         <div class="d-flex flex-column col-4 text-center">
             <h2>xxiv store</h2>
             <a href="">Ưu đãi thành viên</a>
-            <a href="">Tài khoản</a>
+            <a href="/profile">Tài khoản</a>
             <a href="">Tuyển dụng</a>
         </div>
         <div class="d-flex flex-column col-4 text-center">
@@ -16,10 +16,10 @@
         </div>
         <div class="d-flex flex-column col-4 text-center">
             <h2>Thông tin chung</h2>
-            <a href="">Giới Thiệu</a>
-            <a href="">Blog</a>
-            <a href="">Liên Hệ</a>
-            <a href="">Sản Phẩm</a>
+            <a href="/about">Giới Thiệu</a>
+            <a href="/blog">Blog</a>
+            <a href="/contact">Liên Hệ</a>
+            <a href="/product">Sản Phẩm</a>
         </div>
     </div>
 

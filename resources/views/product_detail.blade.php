@@ -42,7 +42,7 @@
                             </select>
                         </div>
                         <div> @if ($product->quantity > 0 && $product->is_visible)
-                            <form class="formClick">
+                            <form class="formclick">
                                 <button type="submit" style="display: none;">
                                     <input type="hidden" value="{{ $product->id }}" name="id">
                                     <input type="hidden" value="{{ $product->name }}" name="name">
@@ -202,17 +202,16 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var button = document.querySelector('.formClick');
-
-        if (button) {
+        var buttons = document.querySelectorAll('.formclick');
+        buttons.forEach(function(button) {
             button.addEventListener('submit', function(event) {
                 event.preventDefault();
-                console.log('Submit button clicked')
                 var productId = button.querySelector('[name="id"]').value;
                 var productName = button.querySelector('[name="name"]').value;
                 var productPrice = button.querySelector('[name="price"]').value;
                 var productQuantity = button.querySelector('[name="quantity"]').value;
                 var productImgLink = button.querySelector('[name="img_link"]').value;
+                // Gửi yêu cầu Ajax đến server
                 $.ajax({
                     type: 'POST',
                     url: "{{ route('cart.store') }}",
@@ -240,7 +239,7 @@
                 });
 
             });
-        }
+        });
     });
 
     function updateCartInHeader() {
