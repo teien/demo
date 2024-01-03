@@ -13,28 +13,36 @@ class OrderDetails extends Model
     use HasFactory;
     protected static function booted()
     {
+        parent::boot();
         static::updating(function ($orderDetails) {
-
-            if ($orderDetails->isDirty('product_id') || $orderDetails->isDirty('quantity')) {
-                $orderDetails->updatePriceFromProduct();
+            if ($orderDetails->order->status !== 0) {
+                if ($orderDetails->isDirty('product_id') || $orderDetails->isDirty('quantity')) {
+                    $orderDetails->updatePriceFromProduct();
+                }
+                if ($orderDetails->isDirty('quantity') || $orderDetails->isDirty('product_id')) {
+                    $orderDetails->updateQuantityProduct();
+                }
+                $orderDetails->updateOrderTotalOnUpdate();
             }
-            if ($orderDetails->isDirty('quantity') || $orderDetails->isDirty('product_id')) {
-                $orderDetails->updateQuantityProduct();
-            }
-            $orderDetails->updateOrderTotalOnUpdate();
         });
 
         static::updated(function ($orderDetails) {
-            $orderDetails->updateOrderTotal();
+            if ($orderDetails->order->status !== 0) {
+                $orderDetails->updateOrderTotal();
+            }
         });
 
         static::deleting(function ($orderDetails) {
-            $orderDetails->updateOrderTotalOnDelete();
-            $orderDetails->updateQuantityProductOnDelete();
+            if ($orderDetails->order->status !== 0) {
+                $orderDetails->updateOrderTotalOnDelete();
+                $orderDetails->updateQuantityProductOnDelete();
+            }
         });
 
         static::deleted(function ($orderDetails) {
-            $orderDetails->updateOrderTotal();
+            if ($orderDetails->order->status !== 0) {
+                $orderDetails->updateOrderTotal();
+            }
         });
     }
 

@@ -22,7 +22,7 @@ class OrderController extends Controller
         }
 
         // Thực hiện cập nhật trạng thái đơn hàng
-        $order->status = 3; // Đã giao hàng thành công
+        $order->status = 2; // Đã giao hàng thành công
         $order->save();
 
         return back()->with('success', 'Cập nhật trạng thái đơn hàng thành công!');

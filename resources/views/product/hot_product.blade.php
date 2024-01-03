@@ -3,7 +3,7 @@
     <div class="owl-carousel owl-theme ms-4">
         @foreach ($product as $index )
         <div class="pro item text-center" >
-            <img src="{{ asset($index->img_link) }} " class="img-fluid" alt="" onclick="redirectToProductDetail('{{ $index->id }}')"/>
+            <img src="{{ $index->img_link }} " class="img-fluid" alt="" onclick="redirectToProductDetail('{{ $index->id }}')"/>
             <h5 style=" white-space: nowrap; overflow: hidden;text-overflow: ellipsis; text-align: center; margin: 15px 22px;" onclick="redirectToProductDetail('{{ $index->id }}')">{{$index->name}}</h5>
             <h4 class="mt-2">{{number_format($index->price,0,',', '.')}} ₫</h4>
             <div class="des">

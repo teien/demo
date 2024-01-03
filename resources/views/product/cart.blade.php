@@ -161,14 +161,14 @@
 
             if (selectedProducts.length === 0) {
                 alert('Vui lòng chọn sản phẩm để mua hàng');
-
+                event.preventDefault();
             } else {
 
                 $.ajax({
                     type: 'POST',
                     url: "{{ route('checkout') }}",
                     data: {
-                        selectedProducts: selectedProducts, // Không cần chuyển đổi sang JSON string
+                        selectedProducts: selectedProducts,
                         _token: '{{ csrf_token() }}',
                     },
                     success: function(response) {

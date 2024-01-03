@@ -16,7 +16,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetails::class,'order_id');
     }
-
+    public function product()
+    {
+        return $this->belongsTo(Products::class);
+    }
     protected $fillable = [
         'fullname',
         'address',
@@ -27,4 +30,33 @@ class Order extends Model
         'user_id',
     ];
     protected $table = 'orders';
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+
+        static::saved(function ($order) {
+            if ($order->isDirty('status') && $order->status == 0) {
+                // Trạng thái là 0 (giao hàng thất bại)
+                $order->updateProductQuantity();
+            }
+        });
+    }
+
+
+    // Hàm cập nhật quantity trong bảng products
+    public function updateProductQuantity()
+    {
+        foreach ($this->orderDetails as $orderDetail) {
+            $product = $orderDetail->product;
+
+            if ($product) {
+                $product->quantity += $orderDetail->quantity;
+                $product->save();
+            }
+        }
+    }
 }
+

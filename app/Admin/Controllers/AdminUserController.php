@@ -19,7 +19,7 @@ class AdminUserController extends AdminController
         $grid->column('id', __('ID'));
         $grid->column('name', __('Name'));
         $grid->column('email', __('Email'));
-        $grid->column('', __('Phone'));
+        $grid->column('phone', __('Phone'));
         //$grid->column('', __('Address'));
 
         //$grid->column('password', __('Password'));

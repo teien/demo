@@ -33,6 +33,7 @@ class User extends Authenticatable
         'password',
         'gauth_id',
         'gauth_type',
+        'phone',
     ];
     /**
      * The attributes that should be hidden for arrays.

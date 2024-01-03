@@ -80,36 +80,38 @@
                         @endif
                         @endforeach
                         <div class="row mb-3">
-                            <div class="col text-start ms-1">
-                                <h5 id="totalPrice" class="d-inline">Total price: {{ number_format($item->Orders->amount) }} đ</h5>
-                                <h5>Mã ĐH:{{ $item->Orders->id }} </h5>
+                           @if(isset($item))
+                           <div class="col text-start ms-1">
+                                <h5 id="totalPrice" class="d-inline">Total price: {{ number_format($item->Order->amount) }} đ</h5>
+                                <h5>Mã ĐH:{{ $item->Order->id }} </h5>
                             </div>
                             <div class="col">
                                 <h5 id="totalPrice" class="d-inline">
                                     Tình trạng đơn hàng:
-                                    @if ($item->Orders->status == 1)
+                                    @if ($item->Order->status == 1)
                                         Đặt hàng thành công - Đang giao hàng
-                                    @elseif ($item->Orders->status == 0)
+                                    @elseif ($item->Order->status == 0)
                                         Đặt hàng thất bại
-                                    @elseif ($item->Orders->status == 3)
+                                    @elseif ($item->Order->status == 2)
                                         Đã giao hàng
                                     @else
                                         Trạng thái không xác định
                                     @endif
                                 </h5>
 
-                                <form action="{{ route('order.finish', ['orderId' => $item->Orders->id]) }}" method="POST">
+                                <form action="{{ route('order.finish', ['orderId' => $item->Order->id]) }}" method="POST">
                                     @csrf
-                                    @if ($item->Orders->status == 1)
+                                    @if ($item->Order->status == 1)
                                     <button type="submit" class="btn btn-success">Đã nhận được hàng</button>
                                     @endif
 
                                 </form>
                             </div>
                             <div class="col text-end">
-                                <time class="text-muted d-inline ">Order date: {{ $item->Orders->created_at }}</time>
+                                <time class="text-muted d-inline ">Order date: {{ $item->Order->created_at }}</time>
                             </div>
                         </div>
+                        @endif
                     </div>
                     @endforeach
                 </div>

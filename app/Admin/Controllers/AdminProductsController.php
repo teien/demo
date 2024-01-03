@@ -8,7 +8,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Str;
-
+use Encore\Admin\Facades\Admin;
 class AdminProductsController extends AdminController
 {
     /**
@@ -23,6 +23,7 @@ class AdminProductsController extends AdminController
      *
      * @return Grid
      */
+
     protected function grid()
     {
         $grid = new Grid(new Products());
@@ -34,7 +35,7 @@ class AdminProductsController extends AdminController
         });
         $grid->column('quantity', __('Tồn kho'))->sortable();
         $grid->column('img_link',__('Ảnh minh họa'))->display(function ($img_link) {
-            $fullUrl = asset("assets/{$img_link}");
+            $fullUrl = asset("{$img_link}");
             return "<img src='{$fullUrl}' style='width: 80px;' />";
         });
         //$grid->column('img_link', __('Image link'));
@@ -52,6 +53,11 @@ class AdminProductsController extends AdminController
             // Thêm 1 filter theo cột dữ liệu
             $filter->like('name', 'Name');
             $filter->like('catalog_id', 'Loại sản phẩm');
+        });
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+
+
         });
 
         return $grid;
@@ -71,11 +77,15 @@ class AdminProductsController extends AdminController
         $show->field('catalog_id', __('Loại sản phẩm'));
         $show->field('name', __('Tên sản phẩm'));
         $show->field('price', __('Giá'));
-        $show->field('amount', __('Tồn kho'));
+        $show->field('quantity', __('Tồn kho'));
         $show->field('img_link', __('Ảnh minh họa'));
         //$show->image('img_link', __('Image link'))->basePath('public/assets/img');
         $show->field('content', __('Giới thiệu sp'));
+        $show->panel()
+        ->tools(function ($tools) {
 
+            $tools->disableDelete();
+        });
         return $show;
     }
 
@@ -84,6 +94,7 @@ class AdminProductsController extends AdminController
      *
      * @return Form
      */
+
     protected function form()
     {
         $form = new Form(new Products());
@@ -91,10 +102,12 @@ class AdminProductsController extends AdminController
         $form->text('name', __('Tên sản phẩm'));
         $form->decimal('price', __('Giá'));
         $form->number('quantity', __('Tồn kho'));
-
-        $form->image('img_link', 'Label');
+        $form->image('img_link', 'Ảnh sản phẩm')->name(function ($file) {
+    return  $file->getClientOriginalName();
+});
         $form->textarea('content', __('Giới thiệu'));
         $form->switch('is_visible', __('Visible'));
+
         return $form;
     }
 }
