@@ -19,6 +19,7 @@ class ContactController extends Controller
         $news->message = $request->message;
 
         $news->save();
+        session()->flash('success', 'Cảm ơn những đóng góp và ý kiến của bạn, chúng tôi sẽ liên hệ lại với bạn sớm nhất có thể. Xin cảm ơn!');
         return redirect()->action([ContactController::class,'index'])
     ;
     }

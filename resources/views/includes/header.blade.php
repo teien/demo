@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-sm-5">
                 <li class="nav-item ">
-                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('home') ? 'active' : '' }}" href="/home">Trang chủ</a>
+                    <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('home')|| Request::is('/') ? 'active' : '' }}" href="/home">Trang chủ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-bolder fs-4 me-4 {{ Request::is('about') ? 'active' : '' }}" href="/about">Giới thiệu</a>
