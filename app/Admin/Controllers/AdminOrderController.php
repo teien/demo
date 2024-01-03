@@ -70,11 +70,6 @@ class AdminOrderController extends AdminController
             $actions->disableDelete();
 
         });
-
-
-
-
-
         return $grid;
     }
 

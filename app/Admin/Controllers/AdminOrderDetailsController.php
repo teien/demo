@@ -44,6 +44,11 @@ class AdminOrderDetailsController extends AdminController
             $filter->like('fullname', 'Tên khách hàng');
             $filter->like('product_id', 'Mã hàng');
         });
+        $grid->actions(function ($actions) {
+
+            $actions->disableDelete();
+
+        });
         return $grid;
     }
 
@@ -84,7 +89,13 @@ class AdminOrderDetailsController extends AdminController
         $form->decimal('price', __('Price'));
         $form->number('quantity', __('Quantity'));
         $form->text('fullname', __('Fullname'));
+        $form->tools(function (Form\Tools $tools) {
+            // Vô hiệu hóa công cụ cụ thể (ví dụ: Excel)
+            $tools->disableDelete();
 
+            // Hoặc vô hiệu hóa tất cả các công cụ
+
+        });
         return $form;
     }
 }
