@@ -80,3 +80,5 @@ Route::get('/product/search', [ProductController::class, 'product'])->name('prod
 
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index']);
 Route::get('/about', [App\Http\Controllers\IntroController::class, 'index']);
+Route::get('/blog/{page}', [App\Http\Controllers\BlogController::class, 'show']);
+

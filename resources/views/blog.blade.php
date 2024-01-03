@@ -59,7 +59,7 @@
                                 giữ ấm bằng một chiếc áo da bụi bặm, đang ngồi
                                 trên hiên của một ngôi nhà gỗ cũ kĩ giữa rừng..
                             </p>
-                            <a href="./blog/nasomattoduro.html">Xem thêm</a>
+                            <a href="{{ url('/blog/nasomattoduro') }}">Xem thêm</a>
                         </div>
                     </div>
                     <div class="card custom-style" style="width: 23%">
@@ -81,7 +81,7 @@
                                 chai nước hoa thực sự tốt, khiến tôi phải rút
                                 hầu bao sở hữu nó ngay trong lần thử đầu tiên.
                             </p>
-                            <a href="./blog/lightblue.html">Xem thêm</a>
+                            <a href="{{ url('/blog/lightblue') }}">Xem thêm</a>
                         </div>
                     </div>
                     <div class="card custom-style" style="width: 23%">
@@ -102,7 +102,7 @@
                                 công nhất trong những tác phẩm của hãng cho đến
                                 giờ, chắc chắn là Black Afgano
                             </p>
-                            <a href="./blog/nasomattoblack.html">Xem thêm</a>
+                            <a href="{{ url('/blog/nasomattoblack') }}">Xem thêm</a>
                         </div>
                     </div>
                     <div class="card custom-style" style="width: 23%">
@@ -123,7 +123,7 @@
                                 chương trình giảm giá sâu cho tất cả các sản
                                 phẩm. Cụ […]
                             </p>
-                            <a href="./blog/blackfriday.html">Xem thêm</a>
+                            <a href="{{ url('/blog/blackfriday') }}">Xem thêm</a>
                         </div>
                     </div>
                     <div class="card custom-style" style="width: 23%">
@@ -144,7 +144,7 @@
                                 niềm vui trong dịp đặc biệt này, chúng tôi muốn
                                 gửi đến một ưu đãi […]
                             </p>
-                            <a href="./blog/perfumebar.html">Xem thêm</a>
+                            <a href="{{ url('/blog/perfumebar') }}">Xem thêm</a>
                         </div>
                     </div>
                     <div class="card custom-style" style="width: 23%">
@@ -165,7 +165,7 @@
                                 mà chúng mình muốn gửi tặng đến những quý khách
                                 hàng yêu […]
                             </p>
-                            <a href="./blog/getfree.html">Xem thêm</a>
+                            <a href="{{ url('/blog/getfree') }}">Xem thêm</a>
                         </div>
                     </div>
                 </div>

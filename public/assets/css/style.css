@@ -758,4 +758,30 @@ body {
 }
 
 
-/*product*/
+/*blog*/
+.custom-style:hover {
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.15); /* Hiệu ứng bóng */
+    transition: box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+
+  .btn-filter-blog{
+    font-size: 18px;
+    font-weight:500;
+    color: #6e6e6e;
+    padding: 5px 30px;
+    border-radius: 50px;
+    border: 2px solid #e6e6e6;
+    background-color: #fff;
+    margin: 70px 10px;
+  }
+
+  .btn-filter-blog:hover{
+    font-size: 18px;
+    font-weight:500;
+    color: #fff;
+    padding: 5px 30px;
+    border-radius: 50px;
+    border: 2px solid #e6e6e6;
+    background-color: #47c9e5;
+    margin: 70px 10px;
+  }
